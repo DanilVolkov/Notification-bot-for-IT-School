@@ -1,0 +1,23 @@
+[project]
+name = "notification-bot-for-it-school"
+version = "0.1.0"
+description = "Notification bot for IT-School"
+requires-python = ">=3.14"
+dependencies = [
+    "aiogram>=3.24.0",
+    "aiogram-dialog>=2.4.0",
+    "environs>=14.5.0",
+    "ruff>=0.14.11",
+]
+
+
+[tool.ruff]
+line-length = 79
+preview = true
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+"manage.py" = ["E501"]
+"settings.py" = ["F401", "E501", "F821"]
