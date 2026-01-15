@@ -1,0 +1,8 @@
+CANCEL = '↩️Назад'
+MAIN_MENU_USERS = 'Пользователи'
+MAIN_MENU_ACCOUNTS = 'Аккаунт'
+MAIN_MENU_CHATS = 'Чаты'
+MAIN_MENU_FAQ = 'FAQ'
+ADD_CHAT = 'Добавить чат'
+DEL_CHAT = 'Удалить чат'
+FIND_CHAT = 'Поиск чата'

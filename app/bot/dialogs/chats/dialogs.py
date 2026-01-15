@@ -17,7 +17,6 @@ from app.bot.handlers.start_session import start_session_router
 
 main_menu_dialog = Dialog(
     Window(
-        Const(MAIN_MENU_TEXT),
         StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
         Group(
             Button(

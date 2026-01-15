@@ -5,9 +5,12 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram_dialog import setup_dialogs
 
+from app.bot.dialogs.account_dialog.dialogs import account_dialog
 from app.bot.handlers.start_session import start_session_router
+from app.bot.middlewares.get_user_role import RoleMiddleware
 from config.config import Config
 from app.bot.dialogs.main_menu.dialogs import main_menu_dialog
+
 # from app.bot.dialogs.unknown_users.dialogs import unknown_user_dialog
 
 logger = logging.getLogger(__name__)
@@ -46,11 +49,15 @@ async def main(config: Config) -> None:
 
     # Подключаем роутеры в нужном порядке
     logger.info("Including routers...")
-    dp.include_routers(start_session_router, main_menu_dialog)
+    dp.include_routers(
+        start_session_router,
+        main_menu_dialog,
+        account_dialog
+    )
 
     # Подключаем миддлвари в нужном порядке
     logger.info("Including middlewares...")
-    # dp.update.middleware(DataBaseMiddleware())
+    dp.message.middleware(RoleMiddleware(config.bot.admin_ids))
     # dp.update.middleware(ShadowBanMiddleware())
     # dp.update.middleware(ActivityCounterMiddleware())
     # dp.update.middleware(LangSettingsMiddleware())
