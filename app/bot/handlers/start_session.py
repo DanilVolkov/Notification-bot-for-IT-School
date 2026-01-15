@@ -30,6 +30,6 @@ async def command_start_process(message: Message,
     #await message.answer("Клавиатура удалена.", reply_markup=ReplyKeyboardRemove())
 
     await dialog_manager.start(
-        state=MenuSG.main_menu,
+        state=MenuSG.start,
         mode=StartMode.RESET_STACK
     )

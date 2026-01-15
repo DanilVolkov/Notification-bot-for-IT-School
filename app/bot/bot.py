@@ -6,6 +6,7 @@ from aiogram.enums import ParseMode
 from aiogram_dialog import setup_dialogs
 
 from app.bot.dialogs.account_dialog.dialogs import account_dialog
+from app.bot.dialogs.chats.dialogs import chats_dialog
 from app.bot.handlers.start_session import start_session_router
 from app.bot.middlewares.get_user_role import RoleMiddleware
 from config.config import Config
@@ -52,19 +53,18 @@ async def main(config: Config) -> None:
     dp.include_routers(
         start_session_router,
         main_menu_dialog,
-        account_dialog
+        account_dialog,
+        chats_dialog,
     )
 
     # Подключаем миддлвари в нужном порядке
     logger.info("Including middlewares...")
     dp.message.middleware(RoleMiddleware(config.bot.admin_ids))
-    # dp.update.middleware(ShadowBanMiddleware())
-    # dp.update.middleware(ActivityCounterMiddleware())
-    # dp.update.middleware(LangSettingsMiddleware())
-    # dp.update.middleware(TranslatorMiddleware())
+
 
     # Запускаем поллинг
     setup_dialogs(dp)
+    await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
     # try:
     #     await dp.start_polling(

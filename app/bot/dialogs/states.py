@@ -1,8 +1,17 @@
 from aiogram.fsm.state import StatesGroup, State
 
 class MenuSG(StatesGroup):
-    main_menu = State()
+    start = State()
 
 
 class AccountSG(StatesGroup):
     start = State()
+
+class ChatsSG(StatesGroup):
+    start = State()
+    add_chat = State()
+    del_chat = State()
+    copy_messages_from_chat = State()
+    copy_messages_in_chat = State()
+    copy_messages_done = State()
+    #search_chat = State()
