@@ -4,7 +4,7 @@ from aiogram_dialog.widgets.kbd import Cancel
 from aiogram_dialog.widgets.media import StaticMedia
 from aiogram_dialog.widgets.text import Format, Const
 
-from app.bot.consts.button_texts import CANCEL
+from app.bot.consts.buttons_texts import CANCEL
 from app.bot.consts.paths import PATH_TO_LOGO
 from app.bot.dialogs.account_dialog.getters import get_account
 from app.bot.dialogs.states import AccountSG

@@ -7,3 +7,7 @@ ADD_CHAT = 'Добавить чат'
 DEL_CHAT = 'Удалить чат'
 FIND_CHAT = 'Поиск чата'
 COPY_MESSAGES = 'Копировать сообщения'
+YES = 'Да'
+NO = 'Нет'
+COUNT_CHATS_WIDTH = 1
+COUNT_CHATS_HEIGHT = 5
