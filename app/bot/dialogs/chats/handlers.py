@@ -6,7 +6,7 @@ from aiogram_dialog.widgets.input import ManagedTextInput, MessageInput
 from aiogram_dialog.widgets.kbd import Button, Select
 
 from app.bot.consts import labels_texts
-from app.bot.dialogs.states import ChatsSG
+from app.bot.dialogs.states import ChatsSG, MessagesSG
 
 logger = logging.getLogger(__name__)
 
@@ -64,3 +64,13 @@ async def find_chat(message: Message, widget: ManagedTextInput, dialog_manager: 
     # found_chats.clear()
     dialog_manager.dialog_data["found_chats"] = found_chats
     await dialog_manager.switch_to(ChatsSG.found_chats)
+
+
+async def set_chat_info(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
+    # TODO: получение id и название чата из БД
+    logger.debug(f"Выбран чат {item_id}")  # TODO: поменять на название из БД
+    chat_id = item_id # TODO: здесь должен быть id чата из БД
+    chat_name = 'Базовый Python 2026 1 поток'  # TODO: здесь название чата (бот) из БД
+    # TODO: добавить обработчик ошибок
+    logger.debug('Переходим в диалог MessagesSG')
+    await dialog_manager.start(MessagesSG.start, data={'chat_id': chat_id, 'chat_name': chat_name})

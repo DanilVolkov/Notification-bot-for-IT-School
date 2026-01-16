@@ -20,7 +20,10 @@ class ChatsSG(StatesGroup):
     copy_messages_from_chat = State()
     copy_messages_in_chat = State()
     copy_messages_done = State()
+    list_chats = State()
 
 
 class MessagesSG(StatesGroup):
     start = State()
+    list_messages = State()
+    add_message = State()

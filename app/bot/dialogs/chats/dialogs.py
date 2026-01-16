@@ -8,7 +8,8 @@ from aiogram_dialog.widgets.text import Const, Format
 from app.bot.consts import buttons_texts, labels_texts
 from app.bot.consts.paths import PATH_TO_LOGO
 from app.bot.dialogs.chats.getters import get_chats, get_copy_chats_name, get_del_chat_name, get_found_chats
-from app.bot.dialogs.chats.handlers import chat_copy_from, chat_copy_in, del_chat, del_chat_confirm, find_chat, no_text
+from app.bot.dialogs.chats.handlers import chat_copy_from, chat_copy_in, del_chat, del_chat_confirm, find_chat, no_text, \
+    set_chat_info
 from app.bot.dialogs.states import ChatsSG
 
 main_window = Window(
@@ -20,20 +21,9 @@ main_window = Window(
     ),
     SwitchTo(text=Const(buttons_texts.FIND_CHAT), id="btn_find_chat", state=ChatsSG.find_chat),
     SwitchTo(text=Const(buttons_texts.COPY_MESSAGES), id="btn_copy_messages", state=ChatsSG.copy_messages_from_chat),
-    ScrollingGroup(  # TODO: подумать над тем, как сделать лучше визуал
-        Select(
-            Format("{item[0]}"),
-            id="chats",
-            item_id_getter=lambda x: x[1],  # TODO: доделать поиск чата по его id для подгрузки данных в него
-            items="list_chats",
-        ),
-        id="chats_paginator",
-        width=buttons_texts.COUNT_CHATS_WIDTH,
-        height=buttons_texts.COUNT_CHATS_HEIGHT,
-    ),
+    SwitchTo(text=Const(buttons_texts.LIST_CHATS), id="btn_list_chats", state=ChatsSG.list_chats),
     Cancel(Const(buttons_texts.CANCEL), id="btn_chats_cancel"),
-    state=ChatsSG.start,
-    getter=get_chats,
+    state=ChatsSG.start
 )
 
 add_chat_window = Window(
@@ -74,7 +64,7 @@ confirm_del_chat_window = Window(
 )
 
 del_chat_done_window = Window(
-    Format("✅ Чат {chat_del_id} успешно удален!"),  # TODO: изменить на название
+    Format("✅ Чат {chat_del_id} успешно удален! Можешь меня удалить из списка участников группы."),  # TODO: изменить на название
     SwitchTo(Const(buttons_texts.CANCEL), id="btn_copy_message_done_chat_cancel", state=ChatsSG.start),
     state=ChatsSG.del_chat_done,
     getter=get_del_chat_name,
@@ -160,6 +150,26 @@ copy_message_done_window = Window(
 )
 
 
+list_chats_window = Window(
+    StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
+    ScrollingGroup(  # TODO: подумать над тем, как сделать лучше визуал
+        Select(
+            Format("{item[0]}"),
+            id="chats",
+            item_id_getter=lambda x: x[1],  # TODO: доделать поиск чата по его id для подгрузки данных в него
+            items="list_chats",
+            on_click=set_chat_info
+        ),
+        id="chats_paginator",
+        width=buttons_texts.COUNT_CHATS_WIDTH,
+        height=buttons_texts.COUNT_CHATS_HEIGHT,
+    ),
+    SwitchTo(Const(buttons_texts.CANCEL), id="btn_list_chats_cancel", state=ChatsSG.start),
+    state=ChatsSG.list_chats,
+    getter=get_chats
+)
+
+
 chats_dialog = Dialog(
     main_window,
     add_chat_window,
@@ -171,4 +181,5 @@ chats_dialog = Dialog(
     copy_message_from_chat_window,
     copy_message_in_chat_window,
     copy_message_done_window,
+    list_chats_window
 )

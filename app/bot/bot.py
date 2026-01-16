@@ -6,6 +6,7 @@ from aiogram.enums import ParseMode
 from aiogram_dialog import setup_dialogs
 
 from app.bot.dialogs.account_dialog.dialogs import account_dialog
+from app.bot.dialogs.chat_messages.dialogs import chats_messages_dialog
 from app.bot.dialogs.chats.dialogs import chats_dialog
 from app.bot.dialogs.main_menu.dialogs import main_menu_dialog
 from app.bot.handlers.start_session import start_session_router
@@ -55,6 +56,7 @@ async def main(config: Config) -> None:
         main_menu_dialog,
         account_dialog,
         chats_dialog,
+        chats_messages_dialog,
     )
 
     # Подключаем миддлвари в нужном порядке
