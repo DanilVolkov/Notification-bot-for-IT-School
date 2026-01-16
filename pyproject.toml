@@ -19,5 +19,4 @@ preview = true
 select = ["E", "F", "I", "W", "B"]
 
 [tool.ruff.lint.per-file-ignores]
-"manage.py" = ["E501"]
-"settings.py" = ["F401", "E501", "F821"]
+"app/bot/consts/*" = ["E501"]

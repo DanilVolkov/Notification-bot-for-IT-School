@@ -40,8 +40,8 @@ class LogSettings:
 @dataclass
 class Config:
     bot: BotSettings
-    #db: DatabaseSettings
-    #redis: RedisSettings
+    # db: DatabaseSettings
+    # redis: RedisSettings
     log: LogSettings
 
 
@@ -84,16 +84,13 @@ def load_config(path: str | None = None) -> Config:
     #     username=env("REDIS_USERNAME", default=""),
     # )
 
-    log_settings = LogSettings(
-        level=env("LOG_LEVEL"),
-        format=env("LOG_FORMAT")
-    )
+    log_settings = LogSettings(level=env("LOG_LEVEL"), format=env("LOG_FORMAT"))
 
     logger.info("Configuration loaded successfully")
 
     return Config(
         bot=BotSettings(token=token, admin_ids=admin_ids),
-        #db=db,
-        #redis=redis,
-        log=log_settings
+        # db=db,
+        # redis=redis,
+        log=log_settings,
     )

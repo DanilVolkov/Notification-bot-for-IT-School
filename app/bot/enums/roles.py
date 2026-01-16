@@ -7,5 +7,3 @@ class UserRole(str, Enum):
     EDITOR = "editor"
     READER = "reader"
     UNKNOWN = "unknown"
-
-

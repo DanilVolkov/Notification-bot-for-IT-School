@@ -6,16 +6,15 @@ from aiogram.types import TelegramObject
 
 logger = logging.getLogger(__name__)
 
+
 class RoleMiddleware(BaseMiddleware):
     def __init__(self, admins: list[int]):
         self._admins = [int(el) for el in admins]
 
-    async def __call__(self,
-        handler: Callable[[TelegramObject, dict[str, Any]], Any],
-        event: TelegramObject,
-        data: dict[str, Any]
+    async def __call__(
+        self, handler: Callable[[TelegramObject, dict[str, Any]], Any], event: TelegramObject, data: dict[str, Any]
     ) -> Any:
-        #logger.debug(event.model_dump_json(indent=4, exclude_none=True))
+        # logger.debug(event.model_dump_json(indent=4, exclude_none=True))
         user_id = int(event.from_user.id)
 
         role = await self.get_user_role(user_id)
