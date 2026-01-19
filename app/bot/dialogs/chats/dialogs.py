@@ -8,8 +8,14 @@ from aiogram_dialog.widgets.text import Const, Format
 from app.bot.consts import buttons_texts, labels_texts
 from app.bot.consts.paths import PATH_TO_LOGO
 from app.bot.dialogs.chats.getters import get_chats, get_copy_chats_name, get_del_chat_name, get_found_chats
-from app.bot.dialogs.chats.handlers import save_chat_from_copy, copy_messages, del_chat, confirm_del_chat, find_chat, \
-    start_chat_messages_dialog
+from app.bot.dialogs.chats.handlers import (
+    confirm_del_chat,
+    copy_messages,
+    del_chat,
+    find_chat,
+    save_chat_from_copy,
+    start_chat_messages_dialog,
+)
 from app.bot.dialogs.states import ChatsSG
 from app.bot.handlers.other_handlers import no_text
 
@@ -24,7 +30,7 @@ main_window = Window(
     SwitchTo(text=Const(buttons_texts.COPY_MESSAGES), id="btn_copy_messages", state=ChatsSG.copy_messages_from_chat),
     SwitchTo(text=Const(buttons_texts.LIST_CHATS), id="btn_list_chats", state=ChatsSG.list_chats),
     Cancel(Const(buttons_texts.CANCEL), id="btn_chats_cancel"),
-    state=ChatsSG.start
+    state=ChatsSG.start,
 )
 
 add_chat_window = Window(
@@ -65,7 +71,9 @@ confirm_del_chat_window = Window(
 )
 
 del_chat_done_window = Window(
-    Format('✅ Чат "{chat_del_id}" успешно удален! Можешь меня удалить из списка участников группы.'),  # TODO: изменить на название
+    Format(
+        '✅ Чат "{chat_del_id}" успешно удален! Можешь меня удалить из списка участников группы.'
+    ),  # TODO: изменить на название
     SwitchTo(Const(buttons_texts.CANCEL), id="btn_copy_message_done_chat_cancel", state=ChatsSG.start),
     state=ChatsSG.del_chat_done,
     getter=get_del_chat_name,
@@ -159,7 +167,7 @@ list_chats_window = Window(
             id="chats",
             item_id_getter=lambda x: x[1],  # TODO: доделать поиск чата по его id для подгрузки данных в него
             items="list_chats",
-            on_click=start_chat_messages_dialog
+            on_click=start_chat_messages_dialog,
         ),
         id="chats_paginator",
         width=buttons_texts.COUNT_CHATS_WIDTH,
@@ -167,7 +175,7 @@ list_chats_window = Window(
     ),
     SwitchTo(Const(buttons_texts.CANCEL), id="btn_list_chats_cancel", state=ChatsSG.start),
     state=ChatsSG.list_chats,
-    getter=get_chats
+    getter=get_chats,
 )
 
 
@@ -182,5 +190,5 @@ chats_dialog = Dialog(
     copy_message_from_chat_window,
     copy_message_in_chat_window,
     copy_message_done_window,
-    list_chats_window
+    list_chats_window,
 )

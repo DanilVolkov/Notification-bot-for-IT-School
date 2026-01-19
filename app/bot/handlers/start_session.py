@@ -3,10 +3,8 @@ from aiogram.enums import BotCommandScopeType
 from aiogram.filters import CommandStart
 from aiogram.types import BotCommandScopeChat, Message
 from aiogram_dialog import DialogManager, StartMode
-from aiogram_dialog.widgets.input import MessageInput
 
 from aiogram_dialog_bot import bot
-from app.bot.consts import labels_texts
 from app.bot.dialogs.states import MenuSG
 from app.bot.enums.roles import UserRole
 from app.bot.keyboards.menu_commands import set_main_menu
