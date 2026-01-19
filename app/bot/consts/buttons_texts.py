@@ -18,4 +18,9 @@ ADD_MESSAGE = 'Добавить сообщение'
 FIND_MESSAGE = 'Поиск сообщения'
 CHANGE_CHAT_NAME = 'Изменить название чата'
 CHAT_MESSAGES = 'Список сообщений'
+CHANGE_MESSAGE_NAME = 'Изменить название'
+CHANGE_MESSAGE_TEXT = 'Изменить текст'
+CHANGE_MESSAGE_DATETIME = 'Изменить дату и время отправки'
+DEL_MESSAGE = 'Удалить сообщение'
+
 

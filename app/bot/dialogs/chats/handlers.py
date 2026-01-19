@@ -11,13 +11,13 @@ from app.bot.dialogs.states import ChatsSG, MessagesSG
 logger = logging.getLogger(__name__)
 
 
-async def chat_copy_from(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
+async def save_chat_from_copy(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
     logger.debug(f"Выбран чат, откуда копировать, с id={item_id}")  # TODO: поменять на название из БД
     dialog_manager.dialog_data["chat_from_id"] = item_id  # TODO: поменять на название
     await dialog_manager.switch_to(state=ChatsSG.copy_messages_in_chat)
 
 
-async def chat_copy_in(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
+async def copy_messages(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
     logger.debug(f"Выбран чат, куда копировать, с id={item_id}")  # TODO: поменять на название
 
     if dialog_manager.dialog_data.get("chat_from_id") == item_id:
@@ -34,7 +34,7 @@ async def chat_copy_in(callback: CallbackQuery, widget: Select, dialog_manager: 
     await dialog_manager.switch_to(state=ChatsSG.copy_messages_done)
 
 
-async def del_chat_confirm(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
+async def confirm_del_chat(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
     logger.debug(f"Выбран чат для удаления, с id={item_id}")
     dialog_manager.dialog_data["chat_del_id"] = item_id
     dialog_manager.dialog_data["chat_del_name"] = "Название чата"  # TODO: поменять на название из БД
@@ -53,10 +53,6 @@ async def del_chat(callback: CallbackQuery, button: Button, dialog_manager: Dial
     await dialog_manager.switch_to(state=ChatsSG.del_chat_done)
 
 
-async def no_text(message: Message, widget: MessageInput, dialog_manager: DialogManager):
-    await message.answer(labels_texts.NO_TEXT_CHAT)
-
-
 async def find_chat(message: Message, widget: ManagedTextInput, dialog_manager: DialogManager, text: str):
     logger.info(f"Поиск чатов по запросу: {message.text}")
     # TODO: поиск чатов в БД
@@ -66,11 +62,12 @@ async def find_chat(message: Message, widget: ManagedTextInput, dialog_manager: 
     await dialog_manager.switch_to(ChatsSG.found_chats)
 
 
-async def set_chat_info(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
-    # TODO: получение id и название чата из БД
-    logger.debug(f"Выбран чат {item_id}")  # TODO: поменять на название из БД
+async def start_chat_messages_dialog(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
+
+    logger.info(f"Выбран чат {item_id}")  # TODO: поменять на название из БД
     chat_id = item_id # TODO: здесь должен быть id чата из БД
     chat_name = 'Базовый Python 2026 1 поток'  # TODO: здесь название чата (бот) из БД
     # TODO: добавить обработчик ошибок
     logger.debug('Переходим в диалог MessagesSG')
+    await dialog_manager.switch_to(state=ChatsSG.start)
     await dialog_manager.start(MessagesSG.start, data={'chat_id': chat_id, 'chat_name': chat_name})

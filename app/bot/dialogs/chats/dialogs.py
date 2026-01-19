@@ -8,9 +8,10 @@ from aiogram_dialog.widgets.text import Const, Format
 from app.bot.consts import buttons_texts, labels_texts
 from app.bot.consts.paths import PATH_TO_LOGO
 from app.bot.dialogs.chats.getters import get_chats, get_copy_chats_name, get_del_chat_name, get_found_chats
-from app.bot.dialogs.chats.handlers import chat_copy_from, chat_copy_in, del_chat, del_chat_confirm, find_chat, no_text, \
-    set_chat_info
+from app.bot.dialogs.chats.handlers import save_chat_from_copy, copy_messages, del_chat, confirm_del_chat, find_chat, \
+    start_chat_messages_dialog
 from app.bot.dialogs.states import ChatsSG
+from app.bot.handlers.other_handlers import no_text
 
 main_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
@@ -42,7 +43,7 @@ del_chat_window = Window(
             id="chats_for_del",
             item_id_getter=lambda x: x[1],  # TODO: доделать удаление чата по его id
             items="list_chats",
-            on_click=del_chat_confirm,
+            on_click=confirm_del_chat,
         ),
         id="chats_paginator_for_del",
         width=1,
@@ -54,7 +55,7 @@ del_chat_window = Window(
 )
 
 confirm_del_chat_window = Window(
-    Format("⚠️ Вы точно хотите удалить чат {chat_del_id}?"),  # TODO: изменить на название
+    Format('⚠️ Вы точно хотите удалить чат "{chat_del_id}"?'),  # TODO: изменить на название
     Row(
         Button(text=Const(buttons_texts.YES), id="btn_del_chat_yes", on_click=del_chat),
         SwitchTo(text=Const(buttons_texts.NO), id="btn_del_chat_no", state=ChatsSG.del_chat),
@@ -64,7 +65,7 @@ confirm_del_chat_window = Window(
 )
 
 del_chat_done_window = Window(
-    Format("✅ Чат {chat_del_id} успешно удален! Можешь меня удалить из списка участников группы."),  # TODO: изменить на название
+    Format('✅ Чат "{chat_del_id}" успешно удален! Можешь меня удалить из списка участников группы.'),  # TODO: изменить на название
     SwitchTo(Const(buttons_texts.CANCEL), id="btn_copy_message_done_chat_cancel", state=ChatsSG.start),
     state=ChatsSG.del_chat_done,
     getter=get_del_chat_name,
@@ -89,7 +90,7 @@ found_chats_window = Window(
             id="found_chats_id",
             item_id_getter=lambda x: x[1],  # TODO: доделать копирование сообщений чата по его id
             items="found_chats",
-            on_click=None,  # TODO: добавить открытие сообщений чата
+            on_click=start_chat_messages_dialog,  # TODO: добавить открытие сообщений чата
         ),
         id="found_chats_paginator",
         width=buttons_texts.COUNT_CHATS_WIDTH,
@@ -110,7 +111,7 @@ copy_message_from_chat_window = Window(
             id="chats_for_copy_message_from",
             item_id_getter=lambda x: x[1],  # TODO: доделать копирование сообщений чата по его id
             items="list_chats",
-            on_click=chat_copy_from,
+            on_click=save_chat_from_copy,
         ),
         id="chats_paginator_for_copy_message_from",
         width=buttons_texts.COUNT_CHATS_WIDTH,
@@ -130,7 +131,7 @@ copy_message_in_chat_window = Window(
             id="chats_for_copy_message_in",
             item_id_getter=lambda x: x[1],  # TODO: доделать копирование сообщений чата по его id
             items="list_chats",
-            on_click=chat_copy_in,
+            on_click=copy_messages,
         ),
         id="chats_paginator_for_copy_message_in",
         width=buttons_texts.COUNT_CHATS_WIDTH,
@@ -143,7 +144,7 @@ copy_message_in_chat_window = Window(
 
 
 copy_message_done_window = Window(
-    Format("✅ Сообщения успешно скопированы из чата {chat_from_id} в чат {chat_in_id}"),
+    Format('✅ Сообщения успешно скопированы из чата "{chat_from_id}" в чат "{chat_in_id}"'),
     SwitchTo(Const(buttons_texts.CANCEL), id="btn_copy_message_done_chat_cancel", state=ChatsSG.start),
     state=ChatsSG.copy_messages_done,
     getter=get_copy_chats_name,
@@ -158,7 +159,7 @@ list_chats_window = Window(
             id="chats",
             item_id_getter=lambda x: x[1],  # TODO: доделать поиск чата по его id для подгрузки данных в него
             items="list_chats",
-            on_click=set_chat_info
+            on_click=start_chat_messages_dialog
         ),
         id="chats_paginator",
         width=buttons_texts.COUNT_CHATS_WIDTH,
