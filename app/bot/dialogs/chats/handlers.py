@@ -6,7 +6,7 @@ from aiogram_dialog.widgets.input import ManagedTextInput
 from aiogram_dialog.widgets.kbd import Button, Select
 
 from app.bot.consts import labels_texts
-from app.bot.dialogs.states import ChatsSG, MessagesSG
+from app.bot.dialogs.states import ChatsSG, ChatMessagesSG
 
 logger = logging.getLogger(__name__)
 
@@ -72,4 +72,4 @@ async def start_chat_messages_dialog(
     # TODO: добавить обработчик ошибок
     logger.debug("Переходим в диалог MessagesSG")
     await dialog_manager.switch_to(state=ChatsSG.start)
-    await dialog_manager.start(MessagesSG.start, data={"chat_id": chat_id, "chat_name": chat_name})
+    await dialog_manager.start(ChatMessagesSG.start, data={"chat_id": chat_id, "chat_name": chat_name})

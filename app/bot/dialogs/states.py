@@ -23,19 +23,22 @@ class ChatsSG(StatesGroup):
     list_chats = State()
 
 
-class MessagesSG(StatesGroup):
+class ChatMessagesSG(StatesGroup):
     start = State()
     list_messages = State()
     add_message_name = State()
     add_message_text = State()
     add_message_datetime = State()
-    message_info = State()
+    change_chat_name = State()
+    find_messages = State()
+    found_messages = State()
+
+
+class MessageInfoSG(StatesGroup):
+    start = State()
     del_message_confirm = State()
     del_message_done = State()
     del_message = State()
     change_message_name = State()
     change_message_text = State()
     change_message_datetime = State()
-    change_chat_name = State()
-    find_messages = State()
-    found_messages = State()

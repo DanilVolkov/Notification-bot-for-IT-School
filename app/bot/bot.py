@@ -9,6 +9,7 @@ from app.bot.dialogs.account_dialog.dialogs import account_dialog
 from app.bot.dialogs.chat_messages.dialogs import chats_messages_dialog
 from app.bot.dialogs.chats.dialogs import chats_dialog
 from app.bot.dialogs.main_menu.dialogs import main_menu_dialog
+from app.bot.dialogs.message_info.dialog import message_info_dialog
 from app.bot.handlers.start_session import start_session_router
 from app.bot.middlewares.get_user_role import RoleMiddleware
 from config.config import Config
@@ -57,6 +58,7 @@ async def main(config: Config) -> None:
         account_dialog,
         chats_dialog,
         chats_messages_dialog,
+        message_info_dialog
     )
 
     # Подключаем миддлвари в нужном порядке
