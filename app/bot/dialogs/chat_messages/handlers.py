@@ -1,14 +1,10 @@
 import logging
-from datetime import datetime
-from typing import Any
 
 from aiogram.types import CallbackQuery, Message
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.input import ManagedTextInput
 from aiogram_dialog.widgets.kbd import Button, Select
 
-
-from app.bot.consts import labels_texts
 from app.bot.dialogs.states import ChatMessagesSG, MessageInfoSG
 
 logger = logging.getLogger(__name__)

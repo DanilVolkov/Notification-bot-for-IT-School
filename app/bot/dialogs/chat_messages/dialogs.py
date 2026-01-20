@@ -22,8 +22,12 @@ main_window = Window(
     Format("💬 {chat_name}"),
     SwitchTo(text=Const(buttons_texts.ADD_MESSAGE), id="btn_add_message", state=ChatMessagesSG.add_message_name),
     SwitchTo(text=Const(buttons_texts.FIND_MESSAGE), id="btn_find_message", state=ChatMessagesSG.find_messages),
-    SwitchTo(text=Const(buttons_texts.CHANGE_CHAT_NAME), id="btn_change_chat_name", state=ChatMessagesSG.change_chat_name),
-    SwitchTo(text=Const(buttons_texts.CHAT_MESSAGES), id="btn_list_messages_chat_name", state=ChatMessagesSG.list_messages),
+    SwitchTo(
+        text=Const(buttons_texts.CHANGE_CHAT_NAME), id="btn_change_chat_name", state=ChatMessagesSG.change_chat_name
+    ),
+    SwitchTo(
+        text=Const(buttons_texts.CHAT_MESSAGES), id="btn_list_messages_chat_name", state=ChatMessagesSG.list_messages
+    ),
     Cancel(Const(buttons_texts.CANCEL), id="btn_chat_info_cancel"),
     state=ChatMessagesSG.start,
     getter=get_chat_info,
@@ -80,12 +84,14 @@ add_message_datetime_window = Window(
     ),
     MessageInput(func=other_handlers.no_text),
     Row(
-    Button(
-        Const(buttons_texts.WITHOUT_DATETIME),
-        id="btn_without_datetime",
-        on_click=handlers.save_message_without_datetime
+        Button(
+            Const(buttons_texts.WITHOUT_DATETIME),
+            id="btn_without_datetime",
+            on_click=handlers.save_message_without_datetime,
         ),
-        SwitchTo(Const(buttons_texts.CANCEL), id="btn_add_message_datetime_cancel", state=ChatMessagesSG.add_message_text),
+        SwitchTo(
+            Const(buttons_texts.CANCEL), id="btn_add_message_datetime_cancel", state=ChatMessagesSG.add_message_text
+        ),
     ),
     state=ChatMessagesSG.add_message_datetime,
 )

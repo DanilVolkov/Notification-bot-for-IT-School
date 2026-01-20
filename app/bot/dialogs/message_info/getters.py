@@ -41,9 +41,8 @@ def parsing_message_status(status: str):
 
 async def get_message_info(dialog_manager: DialogManager, **kwargs):
     # TODO: запрос данных из БД по id сообщения и id чата
-    chat_id = dialog_manager.start_data.get("chat_id")
-    message_id = dialog_manager.start_data.get("message_id")
-
+    # chat_id = dialog_manager.start_data.get("chat_id")
+    # message_id = dialog_manager.start_data.get("message_id")
 
     message_name = "Название сообщения"
     message_text = """Многострочный 
@@ -94,8 +93,4 @@ async def get_message_datetime(dialog_manager: DialogManager, **kwargs):
     if message_datetime:
         is_datetime = True
 
-    return {
-        "message_datetime": message_datetime,
-        "is_datetime": is_datetime,
-        "not_is_datetime": not is_datetime
-    }
+    return {"message_datetime": message_datetime, "is_datetime": is_datetime, "not_is_datetime": not is_datetime}

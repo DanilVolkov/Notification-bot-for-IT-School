@@ -4,12 +4,12 @@ from typing import Any
 
 from aiogram.types import Message
 from aiogram_dialog import DialogManager
-from aiogram_dialog.widgets.input import MessageInput, ManagedTextInput
+from aiogram_dialog.widgets.input import ManagedTextInput, MessageInput
 
 from app.bot.consts import labels_texts
 
-
 logger = logging.getLogger(__name__)
+
 
 async def no_text(message: Message, widget: MessageInput, dialog_manager: DialogManager):
     await message.answer(labels_texts.NO_TEXT)
@@ -18,8 +18,8 @@ async def no_text(message: Message, widget: MessageInput, dialog_manager: Dialog
 def datetime_check(text: Any) -> str:
     try:
         planned_datetime = datetime.strptime(text, "%d.%m.%Y %H:%M")
-    except:
-        raise ValueError("Неверный формат даты или времени")
+    except:  # noqa
+        raise ValueError("Неверный формат даты или времени")  # noqa
     if planned_datetime <= datetime.now():
         raise ValueError("Время должно быть больше, чем настоящий момент")
     return text

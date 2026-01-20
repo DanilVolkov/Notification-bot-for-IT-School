@@ -4,7 +4,7 @@ from aiogram_dialog.widgets.input import ManagedTextInput
 from aiogram_dialog.widgets.kbd import Button
 
 from app.bot.consts import labels_texts
-from app.bot.dialogs.states import ChatMessagesSG, MessageInfoSG
+from app.bot.dialogs.states import MessageInfoSG
 
 
 async def del_message(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
@@ -32,6 +32,7 @@ async def update_message_datetime(message: Message, widget: ManagedTextInput, di
     # TODO: изменение даты в БД
 
     await dialog_manager.switch_to(MessageInfoSG.start)
+
 
 async def update_message_without_datetime(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
     # TODO: изменение даты в БД

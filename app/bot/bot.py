@@ -53,12 +53,7 @@ async def main(config: Config) -> None:
     # Подключаем роутеры в нужном порядке
     logger.info("Including routers...")
     dp.include_routers(
-        start_session_router,
-        main_menu_dialog,
-        account_dialog,
-        chats_dialog,
-        chats_messages_dialog,
-        message_info_dialog
+        start_session_router, main_menu_dialog, account_dialog, chats_dialog, chats_messages_dialog, message_info_dialog
     )
 
     # Подключаем миддлвари в нужном порядке

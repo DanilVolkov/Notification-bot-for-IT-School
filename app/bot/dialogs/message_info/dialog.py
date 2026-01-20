@@ -1,30 +1,30 @@
 from aiogram.enums import ContentType
-from aiogram_dialog import Window, Dialog
-from aiogram_dialog.widgets.input import TextInput, MessageInput
-from aiogram_dialog.widgets.kbd import SwitchTo, Row, Button, Cancel
+from aiogram_dialog import Dialog, Window
+from aiogram_dialog.widgets.input import MessageInput, TextInput
+from aiogram_dialog.widgets.kbd import Button, Cancel, Row, SwitchTo
 from aiogram_dialog.widgets.media import StaticMedia
-from aiogram_dialog.widgets.text import Format, Const
+from aiogram_dialog.widgets.text import Const, Format
 
 from app.bot.consts import buttons_texts, labels_texts
 from app.bot.consts.paths import PATH_TO_LOGO
 from app.bot.dialogs.message_info import handlers
-from app.bot.dialogs.message_info.getters import get_message_info, get_message_name, get_message_text, \
-    get_message_datetime
-from app.bot.dialogs.states import ChatMessagesSG, MessageInfoSG
+from app.bot.dialogs.message_info.getters import (
+    get_message_datetime,
+    get_message_info,
+    get_message_name,
+    get_message_text,
+)
+from app.bot.dialogs.states import MessageInfoSG
 from app.bot.handlers import other_handlers
 
 main_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
     Format("{message_info}"),
     SwitchTo(
-        Const(buttons_texts.CHANGE_MESSAGE_NAME),
-        id="btn_change_message_name",
-        state=MessageInfoSG.change_message_name
+        Const(buttons_texts.CHANGE_MESSAGE_NAME), id="btn_change_message_name", state=MessageInfoSG.change_message_name
     ),
     SwitchTo(
-        Const(buttons_texts.CHANGE_MESSAGE_TEXT),
-        id="btn_change_message_text",
-        state=MessageInfoSG.change_message_text
+        Const(buttons_texts.CHANGE_MESSAGE_TEXT), id="btn_change_message_text", state=MessageInfoSG.change_message_text
     ),
     SwitchTo(
         Const(buttons_texts.CHANGE_MESSAGE_DATETIME),
@@ -61,13 +61,11 @@ change_message_text_window = Window(
 change_message_datetime_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
     Format(
-        text="Текущие дата и время отправки:\n<code>{message_datetime}</code>\n\n" + f"{labels_texts.TIME_SEND_MESSAGE}",
-        when="is_datetime"
+        text="Текущие дата и время отправки:\n<code>{message_datetime}</code>\n\n"
+        + f"{labels_texts.TIME_SEND_MESSAGE}",
+        when="is_datetime",
     ),
-    Format(
-        text=f"Текущая дата и время не установлены.\n\n{labels_texts.TIME_SEND_MESSAGE}",
-        when="not_is_datetime"
-    ),
+    Format(text=f"Текущая дата и время не установлены.\n\n{labels_texts.TIME_SEND_MESSAGE}", when="not_is_datetime"),
     TextInput(
         id="new_message_datetime_input",
         type_factory=other_handlers.datetime_check,
@@ -79,7 +77,7 @@ change_message_datetime_window = Window(
         Button(
             Const(buttons_texts.WITHOUT_DATETIME),
             id="btn_without_datetime",
-            on_click=handlers.update_message_without_datetime
+            on_click=handlers.update_message_without_datetime,
         ),
         SwitchTo(Const(buttons_texts.CANCEL), id="btn_change_message_datetime_cancel", state=MessageInfoSG.start),
     ),
