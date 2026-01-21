@@ -60,7 +60,6 @@ async def main(config: Config) -> None:
     logger.info("Including middlewares...")
     dp.message.middleware(RoleMiddleware(config.bot.admin_ids))
 
-
     # Запускаем поллинг
     setup_dialogs(dp)
     await bot.delete_webhook(drop_pending_updates=True)

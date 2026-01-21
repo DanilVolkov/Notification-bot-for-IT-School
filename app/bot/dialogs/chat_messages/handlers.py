@@ -1,7 +1,6 @@
 import logging
 import os
 
-import pandas as pd
 from aiogram.types import CallbackQuery, Message
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.input import ManagedTextInput, MessageInput
@@ -66,13 +65,17 @@ async def find_message(message: Message, widget: ManagedTextInput, dialog_manage
     await msg.delete()
     await dialog_manager.switch_to(ChatMessagesSG.found_messages)
 
-async def download_msgs_from_excel(message: Message, message_input: MessageInput, dialog_manager: DialogManager,):
+
+async def download_msgs_from_excel(
+    message: Message,
+    message_input: MessageInput,
+    dialog_manager: DialogManager,
+):
     bot = dialog_manager.event.bot
 
     document = message.document
 
-
-    if document.file_name.split('.')[-1].endswith('xlsx'):
+    if document.file_name.split(".")[-1].endswith("xlsx"):
         msg = await bot.send_message(chat_id=message.from_user.id, text=labels_texts.DOWNLOAD_MSGS_FROM_EXCEL_PROCESS)
         file_on_server = await bot.get_file(document.file_id)
         file_path = f"./temp_excel_files/{document.file_unique_id}_{document.file_name}"
@@ -88,7 +91,6 @@ async def download_msgs_from_excel(message: Message, message_input: MessageInput
             await msg.delete()
             await dialog_manager.switch_to(ChatMessagesSG.download_msgs_from_excel_done)
 
-
         try:
             if os.path.exists(file_path):
                 os.remove(file_path)
@@ -100,7 +102,5 @@ async def download_msgs_from_excel(message: Message, message_input: MessageInput
         except OSError as ex:
             logger.warning(f"Ошибка при удалении файла {file_path}: {ex}")
 
-
     else:
         await message.answer(labels_texts.INCORRECT_EXTENSION)
-

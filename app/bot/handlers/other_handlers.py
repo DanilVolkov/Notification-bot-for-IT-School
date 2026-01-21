@@ -1,13 +1,13 @@
 import logging
 from datetime import datetime
 from typing import Any
-import pandas as pd
 
+import pandas as pd
 from aiogram.types import Message
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.input import ManagedTextInput, MessageInput
 
-from app.bot.consts import labels_texts, errors_descriptions
+from app.bot.consts import errors_descriptions, labels_texts
 
 logger = logging.getLogger(__name__)
 
@@ -33,6 +33,7 @@ async def error_datetime(message: Message, widget: ManagedTextInput, dialog_mana
     else:
         await message.answer(labels_texts.ERROR_DATETIME)
 
+
 def check_correct_table(file_path):
     try:
         df = pd.read_excel(file_path)
@@ -44,11 +45,11 @@ def check_correct_table(file_path):
         invalid_dates = []
         for idx, date in enumerate(df[labels_texts.COLUMN_DATETIME_NAME]):
             # убираем секунды
-            date_str = str(date)[:-3] if str(date).count(':') == 2 else str(date)
+            date_str = str(date)[:-3] if str(date).count(":") == 2 else str(date)
 
             # пытаемся менять формат даты, если он неверный
             try:
-                excel_date = datetime.strptime(date_str, '%Y-%m-%d %H:%M')
+                excel_date = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
                 date_str = excel_date.strftime("%d.%m.%Y %H:%M")
             except:  # noqa
                 pass

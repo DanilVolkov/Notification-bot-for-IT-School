@@ -1,6 +1,6 @@
 from aiogram import Router
 from aiogram.enums import BotCommandScopeType
-from aiogram.filters import CommandStart, Command
+from aiogram.filters import Command, CommandStart
 from aiogram.types import BotCommandScopeChat, Message
 from aiogram_dialog import DialogManager, StartMode
 
@@ -15,6 +15,7 @@ menu_router = Router()
 # @start_session_router.message()
 # async def debug_command(message: Message, dialog_manager: DialogManager):
 #     print(message.model_dump_json(indent=4, exclude_none=True))
+
 
 # здесь добавить фильтр на роль пользователя
 @menu_router.message(CommandStart())
@@ -35,5 +36,5 @@ async def command_start_process(message: Message, dialog_manager: DialogManager)
 
 @menu_router.message(Command("main_menu"))
 async def command_main_menu(message: Message, dialog_manager: DialogManager):
-    print('Попал сюда')
+    print("Попал сюда")
     await dialog_manager.start(state=MenuSG.start, mode=StartMode.RESET_STACK)

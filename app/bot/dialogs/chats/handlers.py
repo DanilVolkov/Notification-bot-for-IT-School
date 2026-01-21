@@ -1,4 +1,3 @@
-import asyncio
 import logging
 
 from aiogram.types import CallbackQuery, Message
@@ -25,7 +24,6 @@ async def copy_messages(callback: CallbackQuery, widget: Select, dialog_manager:
     if dialog_manager.dialog_data.get("chat_from_id") == item_id:
         await callback.answer(text=labels_texts.ALERT_COPY_CHAT, show_alert=True)
         return
-
 
     logger.debug(
         f"Копирование сообщений из чата с id = {dialog_manager.dialog_data.get('chat_from_id')} в чат с id {item_id}"
