@@ -28,6 +28,11 @@ main_window = Window(
     SwitchTo(
         text=Const(buttons_texts.CHAT_MESSAGES), id="btn_list_messages_chat_name", state=ChatMessagesSG.list_messages
     ),
+    SwitchTo(
+        text=Const(text=buttons_texts.DOWNLOAD_MESSAGES_FROM_EXCEL),
+        id="btn_download_messages_from_excel",
+        state=ChatMessagesSG.download_msgs_from_excel
+    ),
     Cancel(Const(buttons_texts.CANCEL), id="btn_chat_info_cancel"),
     state=ChatMessagesSG.start,
     getter=get_chat_info,
@@ -143,6 +148,24 @@ found_messages_window = Window(
 )
 
 
+download_msgs_from_excel_window = Window(
+    StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
+    Const(labels_texts.DOWNLOAD_MESSAGES_FROM_EXCEL),
+    MessageInput(func=handlers.download_msgs_from_excel,
+                 content_types=ContentType.DOCUMENT
+    ),
+    SwitchTo(Const(buttons_texts.CANCEL), id="btn_download_msgs_from_excel_cancel", state=ChatMessagesSG.start),
+    state=ChatMessagesSG.download_msgs_from_excel,
+)
+
+
+download_msgs_from_excel_done = Window(
+    Format('✅ Сообщения загружены в чат "{chat_name}"'),
+    SwitchTo(Const(buttons_texts.CANCEL), id="btn_download_msgs_from_excel_done_cancel", state=ChatMessagesSG.start),
+    state=ChatMessagesSG.download_msgs_from_excel_done,
+    getter=get_chat_name
+)
+
 chats_messages_dialog = Dialog(
     main_window,
     list_messages_windows,
@@ -152,4 +175,6 @@ chats_messages_dialog = Dialog(
     change_chat_name,
     find_message_window,
     found_messages_window,
+    download_msgs_from_excel_window,
+    download_msgs_from_excel_done
 )

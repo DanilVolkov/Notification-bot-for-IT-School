@@ -8,8 +8,10 @@ from app.bot.dialogs.states import MessageInfoSG
 
 
 async def del_message(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
-    await callback.answer(text=labels_texts.DEL_MESSAGE_PROCESS)
+    bot = dialog_manager.event.bot
+    msg = await bot.send_message(chat_id=callback.from_user.id, text=labels_texts.DEL_MESSAGE_PROCESS)
     # TODO: удаление сообщения из БД
+    await msg.delete()
     await dialog_manager.switch_to(state=MessageInfoSG.del_message_done)
 
 

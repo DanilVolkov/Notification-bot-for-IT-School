@@ -32,6 +32,8 @@ class ChatMessagesSG(StatesGroup):
     change_chat_name = State()
     find_messages = State()
     found_messages = State()
+    download_msgs_from_excel = State()
+    download_msgs_from_excel_done = State()
 
 
 class MessageInfoSG(StatesGroup):
