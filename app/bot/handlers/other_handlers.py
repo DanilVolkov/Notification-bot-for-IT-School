@@ -6,6 +6,7 @@ import pandas as pd
 from aiogram.types import Message
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.input import ManagedTextInput, MessageInput
+from pandas import DataFrame
 
 from app.bot.consts import errors_descriptions, labels_texts
 
@@ -34,9 +35,9 @@ async def error_datetime(message: Message, widget: ManagedTextInput, dialog_mana
         await message.answer(labels_texts.ERROR_DATETIME)
 
 
-def check_correct_table(file_path):
+def check_correct_table(file_path: str) -> tuple[bool, str, DataFrame]:
     try:
-        df = pd.read_excel(file_path)
+        df: DataFrame = pd.read_excel(file_path)
         df.fillna("", inplace=True)
 
         if labels_texts.COLUMN_DATETIME_NAME not in df.columns:
@@ -73,3 +74,4 @@ def check_correct_table(file_path):
     except Exception as ex:
         logger.error(f"Ошибка чтения таблицы: {ex}")
         return False, labels_texts.ERROR_WORK_EXCEL, pd.DataFrame()
+

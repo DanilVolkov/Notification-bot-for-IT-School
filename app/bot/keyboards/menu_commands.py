@@ -1,7 +1,7 @@
 from aiogram.types import BotCommand
 
 from app.bot.consts.commands import COMMANDS_UNKNOWN, COMMANDS_USER
-from app.bot.enums.roles import UserRole
+from app.bot.enums.user_role import UserRole
 
 
 def set_main_menu(role):

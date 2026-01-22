@@ -44,3 +44,15 @@ class MessageInfoSG(StatesGroup):
     change_message_name = State()
     change_message_text = State()
     change_message_datetime = State()
+
+
+class UsersSG(StatesGroup):
+    start = State()
+    list_users = State()
+
+
+class AddUserSG(StatesGroup):
+    start = State()
+    add_role = State()
+    user_info = State()
+    create_link = State()

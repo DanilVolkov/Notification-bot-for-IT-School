@@ -1,7 +1,7 @@
 from aiogram_dialog import DialogManager
 
 from app.bot.consts import labels_texts
-from app.bot.enums.message_statuses import MessageStatus
+from app.bot.enums.message_status import MessageStatus
 
 
 def get_sticker_from_status_message(status: MessageStatus):

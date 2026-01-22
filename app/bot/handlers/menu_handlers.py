@@ -6,7 +6,7 @@ from aiogram_dialog import DialogManager, StartMode
 
 from aiogram_dialog_bot import bot
 from app.bot.dialogs.states import MenuSG
-from app.bot.enums.roles import UserRole
+from app.bot.enums.user_role import UserRole
 from app.bot.keyboards.menu_commands import set_main_menu
 
 menu_router = Router()
@@ -28,6 +28,9 @@ async def command_start_process(message: Message, dialog_manager: DialogManager)
             commands=set_main_menu(UserRole.ADMIN),  # TODO: потом поменять исходя из роли
             scope=BotCommandScopeChat(type=BotCommandScopeType.CHAT, chat_id=message.from_user.id),
         )
+        if len(message.text.split()) > 1:
+            link = message.text.split()[1]
+            # TODO: здесь обращение в redis по ключу
 
     # await message.answer("Клавиатура удалена.", reply_markup=ReplyKeyboardRemove())
 

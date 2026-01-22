@@ -1,10 +1,16 @@
 from aiogram.types import User
+from aiogram_dialog import DialogManager
 
 
-async def get_account(event_from_user: User, **kwargs):
-    # получение данных из БД
+async def get_account(dialog_manager: DialogManager, **kwargs):
+    user_id = dialog_manager.start_data.get("user_id")
+    # TODO: получение данных из БД о пользователе по его id
+    user_fio = "Иванов Иван Иваныч"
+    user_role = "Прокуратор"
+    user_status = "Активен"
     return {
-        "user": f"{event_from_user.first_name} {event_from_user.last_name}",
-        "user_id": event_from_user.id,
-        "user_role": "Админ",
+        "user_fio": user_fio,
+        "user_id": user_id,
+        "user_role": user_role,
+        "user_status": user_status
     }
