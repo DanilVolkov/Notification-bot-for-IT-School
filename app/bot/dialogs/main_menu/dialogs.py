@@ -8,7 +8,7 @@ from app.bot.consts import buttons_texts
 from app.bot.consts.labels_texts import MAIN_MENU_TEXT
 from app.bot.consts.paths import PATH_TO_LOGO
 from app.bot.dialogs.main_menu import handlers
-from app.bot.dialogs.states import AccountSG, ChatsSG, MenuSG, UsersSG
+from app.bot.dialogs.states import ChatsSG, MenuSG, UsersSG
 
 main_menu_dialog = Dialog(
     Window(
@@ -16,7 +16,11 @@ main_menu_dialog = Dialog(
         Const(MAIN_MENU_TEXT),
         Group(
             Start(text=Const(buttons_texts.MAIN_MENU_USERS), id="btn_main_menu_users", state=UsersSG.start),
-            Button(text=Const(buttons_texts.MAIN_MENU_ACCOUNTS), id="btn_main_menu_account", on_click=handlers.start_account_dialog),
+            Button(
+                text=Const(buttons_texts.MAIN_MENU_ACCOUNTS),
+                id="btn_main_menu_account",
+                on_click=handlers.start_account_dialog,
+            ),
             Start(text=Const(buttons_texts.MAIN_MENU_CHATS), id="btn_main_menu_chats", state=ChatsSG.start),
             Button(text=Const(buttons_texts.MAIN_MENU_FAQ), id="btn_main_menu_faq"),
             width=2,

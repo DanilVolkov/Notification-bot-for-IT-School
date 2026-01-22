@@ -1,12 +1,12 @@
 from aiogram.enums import ContentType
 from aiogram_dialog import Dialog, Window
-from aiogram_dialog.widgets.kbd import Row, Button, SwitchTo, Start, Cancel, ScrollingGroup, Select
+from aiogram_dialog.widgets.kbd import Cancel, ScrollingGroup, Select, Start, SwitchTo
 from aiogram_dialog.widgets.media import StaticMedia
 from aiogram_dialog.widgets.text import Const, Format
 
 from app.bot.consts import buttons_texts
 from app.bot.consts.paths import PATH_TO_LOGO
-from app.bot.dialogs.states import UsersSG, AddUserSG
+from app.bot.dialogs.states import AddUserSG, UsersSG
 from app.bot.dialogs.users import handlers
 from app.bot.dialogs.users.getters import get_users
 
@@ -34,12 +34,8 @@ list_users = Window(
     ),
     SwitchTo(Const(buttons_texts.CANCEL), id="btn_users_cancel", state=UsersSG.start),
     state=UsersSG.list_users,
-    getter=get_users
+    getter=get_users,
 )
 
 
-users_dialog = Dialog(
-    main_window,
-    list_users
-
-)
+users_dialog = Dialog(main_window, list_users)

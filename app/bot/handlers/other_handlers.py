@@ -74,4 +74,3 @@ def check_correct_table(file_path: str) -> tuple[bool, str, DataFrame]:
     except Exception as ex:
         logger.error(f"Ошибка чтения таблицы: {ex}")
         return False, labels_texts.ERROR_WORK_EXCEL, pd.DataFrame()
-

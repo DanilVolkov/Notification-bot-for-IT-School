@@ -1,10 +1,10 @@
 import hashlib
 from datetime import datetime
 
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import CallbackQuery, Message
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.input import ManagedTextInput
-from aiogram_dialog.widgets.kbd import Select, Button
+from aiogram_dialog.widgets.kbd import Button, Select
 
 from app.bot.consts import labels_texts
 from app.bot.dialogs.states import AddUserSG
@@ -16,21 +16,28 @@ def check_user_fio(user_fio: str) -> str:
         return user_fio
     raise ValueError
 
+
 async def save_fio_user(message: Message, widget: ManagedTextInput, dialog_manager: DialogManager, text: str):
     dialog_manager.dialog_data["user_fio"] = text
     await dialog_manager.switch_to(AddUserSG.add_role)
 
+
 async def error_info_user(message: Message, widget: ManagedTextInput, dialog_manager: DialogManager, error: ValueError):
     await message.answer(labels_texts.INCORRECT_INFO_USER)
+
 
 async def save_user_info(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
     roles = dialog_manager.dialog_data.get("roles")
     role_id = int(item_id)
     user_role = next(filter(lambda role: role[1] == role_id, roles))[0]
-    dialog_manager.dialog_data["user_role_id"] = role_id  # TODO: id нужен для создания ссылки для поиска потом в БД роли
+    dialog_manager.dialog_data["user_role_id"] = (
+        role_id  # TODO: id нужен для создания ссылки для поиска потом в БД роли
+    )
     dialog_manager.dialog_data["user_role"] = user_role
 
-    await dialog_manager.switch_to(AddUserSG.user_info) # TODO: подумать, как удалять токен через день после создания в БД
+    await dialog_manager.switch_to(
+        AddUserSG.user_info
+    )  # TODO: подумать, как удалять токен через день после создания в БД
 
 
 async def create_user_link(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
