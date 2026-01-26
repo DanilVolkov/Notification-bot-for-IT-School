@@ -67,7 +67,7 @@ async def main(config: Config) -> None:
 
     # Подключаем миддлвари в нужном порядке
     logger.info('Including middlewares...')
-    dp.message.middleware(RoleMiddleware(config.bot.admin_ids))
+    dp.update.middleware(RoleMiddleware(config.bot.admin_ids))
 
     # Запускаем поллинг
     setup_dialogs(dp)

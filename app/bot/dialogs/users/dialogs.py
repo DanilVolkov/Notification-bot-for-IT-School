@@ -29,6 +29,7 @@ list_users = Window(
             on_click=handlers.start_account_dialog,
         ),
         id='users_paginator',
+        hide_on_single_page=True,
         width=buttons_texts.COUNT_USERS_WIDTH,
         height=buttons_texts.COUNT_USERS_HEIGHT,
     ),

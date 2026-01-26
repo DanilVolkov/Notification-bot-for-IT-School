@@ -15,12 +15,12 @@ class RoleMiddleware(BaseMiddleware):
         self, handler: Callable[[TelegramObject, dict[str, Any]], Any], event: TelegramObject, data: dict[str, Any]
     ) -> Any:
         # logger.debug(event.model_dump_json(indent=4, exclude_none=True))
-        user_id = int(event.from_user.id)
+        user_id = int(data.get("event_from_user").id)
 
         role = await self.get_user_role(user_id)
 
         # Добавляем в контекст
-        data['role'] = role
+        data['user_role'] = role
 
         logger.debug(f'Добавили роль: {role}')
 
@@ -29,5 +29,5 @@ class RoleMiddleware(BaseMiddleware):
     async def get_user_role(self, user_id: int) -> str:
         # TODO: сделать загрузку из БД
         if user_id in self._admins:
-            return 'admin'
-        return 'unknown'  # по умолчанию — неопознан
+            return 'админ'
+        return 'неопознан'  # по умолчанию — неопознан
