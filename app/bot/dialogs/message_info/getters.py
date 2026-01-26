@@ -13,7 +13,7 @@ def get_sticker_from_status_message(status: MessageStatus):
         case MessageStatus.DRAFT:
             return labels_texts.MESSAGE_STICKER_NONE
         case _:
-            return ""
+            return ''
 
 
 def get_text_from_status_message(status: MessageStatus):
@@ -25,15 +25,15 @@ def get_text_from_status_message(status: MessageStatus):
         case MessageStatus.DRAFT:
             return labels_texts.MESSAGE_TEXT_NONE
         case _:
-            return ""
+            return ''
 
 
 def parsing_message_status(status: str):
     status = status.strip()
     match status:
-        case "Отправлено":
+        case 'Отправлено':
             return MessageStatus.SENT
-        case "Запланировано":
+        case 'Запланировано':
             return MessageStatus.PLANNED
         case _:
             return MessageStatus.DRAFT
@@ -44,20 +44,20 @@ async def get_message_info(dialog_manager: DialogManager, **kwargs):
     # chat_id = dialog_manager.start_data.get("chat_id")
     # message_id = dialog_manager.start_data.get("message_id")
 
-    message_name = "Название сообщения"
-    message_text = """Многострочный 
+    message_name = 'Название сообщения'
+    message_text = '''Многострочный 
     Текст сообщения
-Вот так вот"""
-    message_datetime = "01.02.2026 17:30"  # TODO: парсинг даты из БД
-    message_status_db = "Запланировано"
+Вот так вот'''
+    message_datetime = '01.02.2026 17:30'  # TODO: парсинг даты из БД
+    message_status_db = 'Запланировано'
 
     message_status = parsing_message_status(message_status_db)
 
     # кешируем для изменения, чтобы запросы обрабатывались быстрее
-    dialog_manager.dialog_data["message_name"] = message_name
-    dialog_manager.dialog_data["message_text"] = message_text
-    dialog_manager.dialog_data["message_datetime"] = message_datetime
-    dialog_manager.dialog_data["message_status"] = message_status
+    dialog_manager.dialog_data['message_name'] = message_name
+    dialog_manager.dialog_data['message_text'] = message_text
+    dialog_manager.dialog_data['message_datetime'] = message_datetime
+    dialog_manager.dialog_data['message_status'] = message_status
 
     if (message_status.SENT or message_status.PLANNED) and message_datetime:
         message_status_sticker = get_sticker_from_status_message(message_status)
@@ -67,30 +67,30 @@ async def get_message_info(dialog_manager: DialogManager, **kwargs):
         message_time = message_datetime.split()[1]
 
         message_info = (
-            f"{message_name}\n\n"
-            f"{message_text}\n\n"
-            f"{message_status_sticker} {message_status_text} {message_date} в {message_time}"
+            f'{message_name}\n\n'
+            f'{message_text}\n\n'
+            f'{message_status_sticker} {message_status_text} {message_date} в {message_time}'
         )
     else:
-        message_info = f"{message_name}\n\n{message_text}"
+        message_info = f'{message_name}\n\n{message_text}'
 
-    return {"message_info": message_info}
+    return {'message_info': message_info}
 
 
 async def get_message_name(dialog_manager: DialogManager, **kwargs):
-    message_name = dialog_manager.dialog_data.get("message_name")
-    return {"message_name": message_name}
+    message_name = dialog_manager.dialog_data.get('message_name')
+    return {'message_name': message_name}
 
 
 async def get_message_text(dialog_manager: DialogManager, **kwargs):
-    message_text = dialog_manager.dialog_data.get("message_text")
-    return {"message_text": message_text}
+    message_text = dialog_manager.dialog_data.get('message_text')
+    return {'message_text': message_text}
 
 
 async def get_message_datetime(dialog_manager: DialogManager, **kwargs):
-    message_datetime = dialog_manager.dialog_data.get("message_datetime")
+    message_datetime = dialog_manager.dialog_data.get('message_datetime')
     is_datetime = False
     if message_datetime:
         is_datetime = True
 
-    return {"message_datetime": message_datetime, "is_datetime": is_datetime, "not_is_datetime": not is_datetime}
+    return {'message_datetime': message_datetime, 'is_datetime': is_datetime, 'not_is_datetime': not is_datetime}

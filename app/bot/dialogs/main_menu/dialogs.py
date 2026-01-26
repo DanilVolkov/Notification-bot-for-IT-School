@@ -15,14 +15,14 @@ main_menu_dialog = Dialog(
         StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
         Const(MAIN_MENU_TEXT),
         Group(
-            Start(text=Const(buttons_texts.MAIN_MENU_USERS), id="btn_main_menu_users", state=UsersSG.start),
+            Start(text=Const(buttons_texts.MAIN_MENU_USERS), id='btn_main_menu_users', state=UsersSG.start),
             Button(
                 text=Const(buttons_texts.MAIN_MENU_ACCOUNTS),
-                id="btn_main_menu_account",
+                id='btn_main_menu_account',
                 on_click=handlers.start_account_dialog,
             ),
-            Start(text=Const(buttons_texts.MAIN_MENU_CHATS), id="btn_main_menu_chats", state=ChatsSG.start),
-            Button(text=Const(buttons_texts.MAIN_MENU_FAQ), id="btn_main_menu_faq"),
+            Start(text=Const(buttons_texts.MAIN_MENU_CHATS), id='btn_main_menu_chats', state=ChatsSG.start),
+            Button(text=Const(buttons_texts.MAIN_MENU_FAQ), id='btn_main_menu_faq'),
             width=2,
         ),
         state=MenuSG.start,

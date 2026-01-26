@@ -14,11 +14,11 @@ logger = logging.getLogger(__name__)
 
 
 async def set_message_info(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
-    chat_id = dialog_manager.start_data.get("chat_id")
+    chat_id = dialog_manager.start_data.get('chat_id')
 
-    logger.info(f"Получение сообщения {item_id} из чата {chat_id}")
+    logger.info(f'Получение сообщения {item_id} из чата {chat_id}')
 
-    await dialog_manager.start(MessageInfoSG.start, data={"message_id": item_id, "chat_id": chat_id})
+    await dialog_manager.start(MessageInfoSG.start, data={'message_id': item_id, 'chat_id': chat_id})
 
 
 async def save_message_name(message: Message, widget: ManagedTextInput, dialog_manager: DialogManager, text: str):
@@ -30,19 +30,19 @@ async def save_message_text(message: Message, widget: ManagedTextInput, dialog_m
 
 
 async def save_message_datetime(message: Message, widget: ManagedTextInput, dialog_manager: DialogManager, text: str):
-    chat_id = dialog_manager.start_data.get("chat_id")
+    chat_id = dialog_manager.start_data.get('chat_id')
     # TODO: создание в БД нового сообщения одной отдельной функцией
     # TODO: получение id сообщения
     await dialog_manager.switch_to(ChatMessagesSG.start)
-    await dialog_manager.start(MessageInfoSG.start, data={"message_id": 5, "chat_id": chat_id})
+    await dialog_manager.start(MessageInfoSG.start, data={'message_id': 5, 'chat_id': chat_id})
 
 
 async def save_message_without_datetime(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
-    chat_id = dialog_manager.start_data.get("chat_id")
+    chat_id = dialog_manager.start_data.get('chat_id')
     # TODO: создание в БД нового сообщения одной отдельной функцией
     # TODO: получение id сообщения
     await dialog_manager.switch_to(ChatMessagesSG.start)
-    await dialog_manager.start(MessageInfoSG.start, data={"message_id": 5, "chat_id": chat_id})
+    await dialog_manager.start(MessageInfoSG.start, data={'message_id': 5, 'chat_id': chat_id})
 
 
 async def update_chat_name(message: Message, widget: ManagedTextInput, dialog_manager: DialogManager, text: str):
@@ -57,11 +57,11 @@ async def find_message(message: Message, widget: ManagedTextInput, dialog_manage
     # TODO: поиск сообщений в БД
 
     found_messages = [
-        "✅ 12.01.2026 17:30 Название сообщения",
-        "12.01.2026 17:35 Название сообщения",
+        '✅ 12.01.2026 17:30 Название сообщения',
+        '12.01.2026 17:35 Название сообщения',
     ]  # TODO: найденные чаты в БД
     # found_messages.clear()
-    dialog_manager.dialog_data["found_messages"] = found_messages
+    dialog_manager.dialog_data['found_messages'] = found_messages
     await msg.delete()
     await dialog_manager.switch_to(ChatMessagesSG.found_messages)
 
@@ -75,10 +75,10 @@ async def download_msgs_from_excel(
 
     document = message.document
 
-    if document.file_name.split(".")[-1].endswith("xlsx"):
+    if document.file_name.split('.')[-1].endswith('xlsx'):
         msg = await bot.send_message(chat_id=message.from_user.id, text=labels_texts.DOWNLOAD_MSGS_FROM_EXCEL_PROCESS)
         file_on_server = await bot.get_file(document.file_id)
-        file_path = f"./temp_excel_files/{document.file_unique_id}_{document.file_name}"
+        file_path = f'./temp_excel_files/{document.file_unique_id}_{document.file_name}'
         await bot.download_file(file_on_server.file_path, file_path)
         is_valid, msg_error, df = check_correct_table(file_path)
 
@@ -94,13 +94,13 @@ async def download_msgs_from_excel(
         try:
             if os.path.exists(file_path):
                 os.remove(file_path)
-                logger.debug(f"Файл удалён: {file_path}")
+                logger.debug(f'Файл удалён: {file_path}')
             else:
-                logger.debug(f"Файл не найден: {file_path}")
+                logger.debug(f'Файл не найден: {file_path}')
         except PermissionError:
-            logger.warning(f"Недостаточно прав для удаления файла: {file_path}")
+            logger.warning(f'Недостаточно прав для удаления файла: {file_path}')
         except OSError as ex:
-            logger.warning(f"Ошибка при удалении файла {file_path}: {ex}")
+            logger.warning(f'Ошибка при удалении файла {file_path}: {ex}')
 
     else:
         await message.answer(labels_texts.INCORRECT_EXTENSION)

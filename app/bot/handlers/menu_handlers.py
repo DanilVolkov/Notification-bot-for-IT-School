@@ -23,7 +23,7 @@ async def command_start_process(message: Message, dialog_manager: DialogManager)
     # есть ли пользователь в БД, если да - то получение роли
     # если нет - то устанавливаем как для неизвестного
     # если идёт сообщение в чате от пользователя, который есть в списке - реагируем. Иначе нет.
-    if message.chat.type == "private":
+    if message.chat.type == 'private':
         await bot.set_my_commands(
             commands=set_main_menu(UserRole.ADMIN),  # TODO: потом поменять исходя из роли
             scope=BotCommandScopeChat(type=BotCommandScopeType.CHAT, chat_id=message.from_user.id),
@@ -37,7 +37,7 @@ async def command_start_process(message: Message, dialog_manager: DialogManager)
     await dialog_manager.start(state=MenuSG.start, mode=StartMode.RESET_STACK)
 
 
-@menu_router.message(Command("main_menu"))
+@menu_router.message(Command('main_menu'))
 async def command_main_menu(message: Message, dialog_manager: DialogManager):
-    print("Попал сюда")
+    print('Попал сюда')
     await dialog_manager.start(state=MenuSG.start, mode=StartMode.RESET_STACK)

@@ -20,14 +20,14 @@ class RoleMiddleware(BaseMiddleware):
         role = await self.get_user_role(user_id)
 
         # Добавляем в контекст
-        data["role"] = role
+        data['role'] = role
 
-        logger.debug(f"Добавили роль: {role}")
+        logger.debug(f'Добавили роль: {role}')
 
         return await handler(event, data)
 
     async def get_user_role(self, user_id: int) -> str:
         # TODO: сделать загрузку из БД
         if user_id in self._admins:
-            return "admin"
-        return "unknown"  # по умолчанию — неопознан
+            return 'admin'
+        return 'unknown'  # по умолчанию — неопознан

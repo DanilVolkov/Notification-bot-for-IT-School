@@ -19,7 +19,7 @@ async def no_text(message: Message, widget: MessageInput, dialog_manager: Dialog
 
 def datetime_check(text: Any) -> str:
     try:
-        planned_datetime = datetime.strptime(text, "%d.%m.%Y %H:%M")
+        planned_datetime = datetime.strptime(text, '%d.%m.%Y %H:%M')
     except:  # noqa
         raise ValueError(errors_descriptions.INCORRECT_DATETIME_FORMAT)  # noqa
     if planned_datetime <= datetime.now():
@@ -28,7 +28,7 @@ def datetime_check(text: Any) -> str:
 
 
 async def error_datetime(message: Message, widget: ManagedTextInput, dialog_manager: DialogManager, error: ValueError):
-    logger.debug(f"Ошибка при добавлении даты и времени: {error}")
+    logger.debug(f'Ошибка при добавлении даты и времени: {error}')
     if errors_descriptions.INCORRECT_DATETIME_FORMAT in str(error):
         await message.answer(labels_texts.ERROR_TYPE_DATETIME)
     else:
@@ -38,7 +38,7 @@ async def error_datetime(message: Message, widget: ManagedTextInput, dialog_mana
 def check_correct_table(file_path: str) -> tuple[bool, str, DataFrame]:
     try:
         df: DataFrame = pd.read_excel(file_path)
-        df.fillna("", inplace=True)
+        df.fillna('', inplace=True)
 
         if labels_texts.COLUMN_DATETIME_NAME not in df.columns:
             return False, errors_descriptions.NOT_DATETIME_COLUMN, df
@@ -46,12 +46,12 @@ def check_correct_table(file_path: str) -> tuple[bool, str, DataFrame]:
         invalid_dates = []
         for idx, date in enumerate(df[labels_texts.COLUMN_DATETIME_NAME]):
             # убираем секунды
-            date_str = str(date)[:-3] if str(date).count(":") == 2 else str(date)
+            date_str = str(date)[:-3] if str(date).count(':') == 2 else str(date)
 
             # пытаемся менять формат даты, если он неверный
             try:
-                excel_date = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
-                date_str = excel_date.strftime("%d.%m.%Y %H:%M")
+                excel_date = datetime.strptime(date_str, '%Y-%m-%d %H:%M')
+                date_str = excel_date.strftime('%d.%m.%Y %H:%M')
             except:  # noqa
                 pass
 
@@ -63,14 +63,14 @@ def check_correct_table(file_path: str) -> tuple[bool, str, DataFrame]:
                     if errors_descriptions.INCORRECT_DATETIME_MOMENT in str(ex):
                         error_description = errors_descriptions.INCORRECT_DATETIME_MOMENT
 
-                    invalid_dates.append(f"➡️ Строка {idx + 2}: {date_str} - {error_description}")
+                    invalid_dates.append(f'➡️ Строка {idx + 2}: {date_str} - {error_description}')
 
         if invalid_dates:
-            err_msg = "⚠️ Некорректные даты:\n" + "\n".join(invalid_dates)
+            err_msg = '⚠️ Некорректные даты:\n' + '\n'.join(invalid_dates)
             return False, err_msg, df
 
-        return True, "", df
+        return True, '', df
 
     except Exception as ex:
-        logger.error(f"Ошибка чтения таблицы: {ex}")
+        logger.error(f'Ошибка чтения таблицы: {ex}')
         return False, labels_texts.ERROR_WORK_EXCEL, pd.DataFrame()

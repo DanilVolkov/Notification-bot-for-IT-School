@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 # Функция конфигурирования и запуска бота
 async def main(config: Config) -> None:
-    logger.info("Starting bot...")
+    logger.info('Starting bot...')
     # # Инициализируем хранилище
     # storage = RedisStorage(
     #     redis=Redis(
@@ -53,7 +53,7 @@ async def main(config: Config) -> None:
     # )
 
     # Подключаем роутеры в нужном порядке
-    logger.info("Including routers...")
+    logger.info('Including routers...')
     dp.include_routers(
         menu_router,
         main_menu_dialog,
@@ -66,7 +66,7 @@ async def main(config: Config) -> None:
     )
 
     # Подключаем миддлвари в нужном порядке
-    logger.info("Including middlewares...")
+    logger.info('Including middlewares...')
     dp.message.middleware(RoleMiddleware(config.bot.admin_ids))
 
     # Запускаем поллинг

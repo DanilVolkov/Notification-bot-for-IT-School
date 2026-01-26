@@ -16,7 +16,7 @@ logging.basicConfig(
 #  Отвечает за переключение политики цикла событий на более старую, но
 #  надёжную, чтобы избежать возможных ошибок при использовании asyncio на
 #  Windows.
-if sys.platform.startswith("win") or os.name == "nt":
+if sys.platform.startswith('win') or os.name == 'nt':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 asyncio.run(main(config))
