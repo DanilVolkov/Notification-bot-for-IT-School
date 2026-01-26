@@ -12,7 +12,9 @@ async def get_account(dialog_manager: DialogManager, **kwargs):
     user_status = 'Активен'
     # создателя нельзя заблокировать/удалить и сменить о нём информацию
     is_find_user_creator = True if user_role.lower() == UserRole.CREATOR else False
-    is_admin = True if dialog_manager.middleware_data.get('user_role') in [UserRole.CREATOR, UserRole.ADMIN] else False  # TODO: вынести в отдельный хендлер для всех
+    is_admin = (
+        True if dialog_manager.middleware_data.get('user_role') in [UserRole.CREATOR, UserRole.ADMIN] else False
+    )  # TODO: вынести в отдельный хендлер для всех
     user_blocked = True if user_status.lower() == UserStatus.BLOCK else False
     return {
         'user_fio': user_fio,
@@ -23,5 +25,3 @@ async def get_account(dialog_manager: DialogManager, **kwargs):
         'user_status': user_status,
         'user_blocked': user_blocked,
     }
-
-

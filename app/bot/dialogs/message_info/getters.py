@@ -45,9 +45,9 @@ async def get_message_info(dialog_manager: DialogManager, **kwargs):
     # message_id = dialog_manager.start_data.get("message_id")
 
     message_name = 'Название сообщения'
-    message_text = '''Многострочный 
+    message_text = """Многострочный 
     Текст сообщения
-Вот так вот'''
+Вот так вот"""
     message_datetime = '01.02.2026 17:30'  # TODO: парсинг даты из БД
     message_status_db = 'Запланировано'
 
