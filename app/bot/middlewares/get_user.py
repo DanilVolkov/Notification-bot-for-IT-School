@@ -18,7 +18,7 @@ class RoleMiddleware(BaseMiddleware):
         user_id = int(data.get('event_from_user').id)
 
         role = await self.get_user_role(user_id)
-
+        # TODO: добавить получение всей информации о пользователе
         # Добавляем в контекст
         data['user_role'] = role
 
@@ -29,5 +29,5 @@ class RoleMiddleware(BaseMiddleware):
     async def get_user_role(self, user_id: int) -> str:
         # TODO: сделать загрузку из БД
         if user_id in self._admins:
-            return 'админ'
+            return 'создатель'
         return 'неопознан'  # по умолчанию — неопознан

@@ -3,6 +3,7 @@ from aiogram_dialog import DialogManager
 
 async def get_user_roles(dialog_manager: DialogManager, **kwargs):
     # TODO: получение ролей из БД
+    # TODO: Роль "Создатель" появляется только у того, кто сам создатель
     user_roles = [('Админ', 1), ('Прокуратор', 2), ('Куратор', 3)]
     dialog_manager.dialog_data['roles'] = user_roles
     return {'user_roles': user_roles}

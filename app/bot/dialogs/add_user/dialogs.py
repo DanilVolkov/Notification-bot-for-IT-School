@@ -10,18 +10,18 @@ from app.bot.consts.paths import PATH_TO_LOGO
 from app.bot.dialogs.add_user import handlers
 from app.bot.dialogs.add_user.getters import get_user_info, get_user_link, get_user_roles
 from app.bot.dialogs.states import AddUserSG
-from app.bot.handlers.other_handlers import no_text
+from app.bot.handlers import other_handlers
 
 main_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
     Const(labels_texts.ADD_USER_FIO),
     TextInput(
         id='user_info_input',
-        type_factory=handlers.check_user_fio,
+        type_factory=other_handlers.check_user_fio,
         on_success=handlers.save_fio_user,
         on_error=handlers.error_info_user,
     ),
-    MessageInput(func=no_text),
+    MessageInput(func=other_handlers.no_text),
     Cancel(Const(buttons_texts.CANCEL)),
     state=AddUserSG.start,
 )

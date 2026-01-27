@@ -13,7 +13,7 @@ from app.bot.dialogs.main_menu.dialogs import main_menu_dialog
 from app.bot.dialogs.message_info.dialogs import message_info_dialog
 from app.bot.dialogs.users.dialogs import users_dialog
 from app.bot.handlers.menu_handlers import menu_router
-from app.bot.middlewares.get_user_role import RoleMiddleware
+from app.bot.middlewares.get_user import RoleMiddleware
 from config.config import Config
 
 # from app.bot.dialogs.unknown_users.dialogs import unknown_user_dialog

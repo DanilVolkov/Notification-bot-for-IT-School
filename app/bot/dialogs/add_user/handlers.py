@@ -10,13 +10,6 @@ from app.bot.consts import labels_texts
 from app.bot.dialogs.states import AddUserSG
 
 
-def check_user_fio(user_fio: str) -> str:
-    fio = user_fio.strip().split()
-    if len(fio) == 3 and all(map(lambda s: s.isalpha(), fio)):
-        return user_fio
-    raise ValueError
-
-
 async def save_fio_user(message: Message, widget: ManagedTextInput, dialog_manager: DialogManager, text: str):
     dialog_manager.dialog_data['user_fio'] = text
     await dialog_manager.switch_to(AddUserSG.add_role)

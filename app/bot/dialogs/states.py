@@ -7,6 +7,12 @@ class MenuSG(StatesGroup):
 
 class AccountSG(StatesGroup):
     start = State()
+    block_user = State()
+    del_user = State()
+    del_user_done = State()
+    change_username = State()
+    change_role = State()
+    chats_user = State()
 
 
 class ChatsSG(StatesGroup):
