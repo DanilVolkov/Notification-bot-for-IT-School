@@ -47,7 +47,7 @@ list_messages_windows = Window(
             id='messages',
             item_id_getter=lambda x: x[1],
             items='list_messages',
-            on_click=handlers.set_message_info,
+            on_click=handlers.start_message_info_dialog,
         ),
         id='messages_paginator',
         hide_on_single_page=True,
@@ -85,7 +85,7 @@ add_message_datetime_window = Window(
     TextInput(
         id='datetime_message_input',
         type_factory=other_handlers.datetime_check,
-        on_success=handlers.save_message_datetime,
+        on_success=handlers.save_message_datetime_and_start_message_info_dialog,
         on_error=other_handlers.error_datetime,
     ),
     MessageInput(func=other_handlers.no_text),
@@ -93,7 +93,7 @@ add_message_datetime_window = Window(
         Button(
             Const(buttons_texts.WITHOUT_DATETIME),
             id='btn_without_datetime',
-            on_click=handlers.save_message_without_datetime,
+            on_click=handlers.save_message_without_datetime_and_start_message_info_dialog,
         ),
         SwitchTo(
             Const(buttons_texts.CANCEL), id='btn_add_message_datetime_cancel', state=ChatMessagesSG.add_message_text
@@ -137,7 +137,7 @@ found_messages_window = Window(
             id='found_messages_id',
             item_id_getter=lambda x: x[1],  # TODO: доделать копирование сообщений чата по его id
             items='found_messages',
-            on_click=handlers.set_message_info,
+            on_click=handlers.start_message_info_dialog,
         ),
         id='found_messages_paginator',
         hide_on_single_page=True,

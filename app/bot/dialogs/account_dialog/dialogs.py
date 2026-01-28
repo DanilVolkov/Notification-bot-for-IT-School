@@ -71,7 +71,7 @@ main_window = Window(
 
 
 block_user_window = Window(
-    Format('⚠️ Вы точно хотите заблокировать пользователя "{user_fio}"?'),
+    Format('⚠️ Вы точно хотите заблокировать пользователя "{find_user_fio}"?'),
     Row(
         Button(text=Const(buttons_texts.YES), id='btn_block_user_yes', on_click=handlers.block_user),
         SwitchTo(text=Const(buttons_texts.NO), id='btn_block_user_no', state=AccountSG.start),
@@ -81,7 +81,7 @@ block_user_window = Window(
 )
 
 del_user_window = Window(
-    Format('⚠️ Вы точно хотите удалить пользователя "{user_fio}"?'),
+    Format('⚠️ Вы точно хотите удалить пользователя "{find_user_fio}"?'),
     Row(
         Button(text=Const(buttons_texts.YES), id='btn_block_user_yes', on_click=handlers.del_user),
         SwitchTo(text=Const(buttons_texts.NO), id='btn_block_user_no', state=AccountSG.start),
@@ -101,7 +101,7 @@ del_user_done_window = Window(
 
 change_username_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
-    Format('Текущее ФИО пользователя:\n<code>{user_fio}</code>\n'),
+    Format('Текущее ФИО пользователя:\n<code>{find_user_fio}</code>\n'),
     Const(labels_texts.ADD_USER_FIO),
     TextInput(
         id='user_info_input',
@@ -134,29 +134,26 @@ change_user_role_window = Window(
     getter=getters.get_user_roles,
 )
 
-# TODO: добавить чаты пользователя
+
 chats_user_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
     ScrollingGroup(
         Select(
             Format('{item[0]}'),
-            id='chats_for_del',
+            id='chats_user',
             item_id_getter=lambda x: x[1],
-            items='list_chats_user',
-            on_click=,
+            items='list_chats',
+            on_click=handlers.start_chat_messages_dialog,
         ),
-        id='chats_paginator_for_del',
+        id='chats_paginator',
         hide_on_single_page=True,
         width=buttons_texts.COUNT_CHATS_WIDTH,
         height=buttons_texts.COUNT_CHATS_HEIGHT,
     ),
-    SwitchTo(Const(buttons_texts.CANCEL), id='btn_del_chat_cancel', state=AccountSG.start),
+    SwitchTo(Const(buttons_texts.CANCEL), id='btn_chats_user_cancel', state=AccountSG.start),
     state=AccountSG.chats_user,
-    getter=get_chats,
+    getter=getters.get_chats,
 )
-
-
-
 
 
 account_dialog = Dialog(
@@ -169,8 +166,3 @@ account_dialog = Dialog(
     chats_user_window
 
 )
-
-
-
-
-# TODO: сделать кнопку восстановления файлов для админов, создателей и прокураторов

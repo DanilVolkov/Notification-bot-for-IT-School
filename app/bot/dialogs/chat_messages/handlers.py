@@ -13,7 +13,7 @@ from app.bot.handlers.other_handlers import check_correct_table
 logger = logging.getLogger(__name__)
 
 
-async def set_message_info(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
+async def start_message_info_dialog(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
     chat_id = dialog_manager.start_data.get('chat_id')
 
     logger.info(f'Получение сообщения {item_id} из чата {chat_id}')
@@ -29,7 +29,7 @@ async def save_message_text(message: Message, widget: ManagedTextInput, dialog_m
     await dialog_manager.switch_to(ChatMessagesSG.add_message_datetime)
 
 
-async def save_message_datetime(message: Message, widget: ManagedTextInput, dialog_manager: DialogManager, text: str):
+async def save_message_datetime_and_start_message_info_dialog(message: Message, widget: ManagedTextInput, dialog_manager: DialogManager, text: str):
     chat_id = dialog_manager.start_data.get('chat_id')
     # TODO: создание в БД нового сообщения одной отдельной функцией
     # TODO: получение id сообщения
@@ -37,7 +37,7 @@ async def save_message_datetime(message: Message, widget: ManagedTextInput, dial
     await dialog_manager.start(MessageInfoSG.start, data={'message_id': 5, 'chat_id': chat_id})
 
 
-async def save_message_without_datetime(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
+async def save_message_without_datetime_and_start_message_info_dialog(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
     chat_id = dialog_manager.start_data.get('chat_id')
     # TODO: создание в БД нового сообщения одной отдельной функцией
     # TODO: получение id сообщения

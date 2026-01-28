@@ -62,3 +62,12 @@ class AddUserSG(StatesGroup):
     add_role = State()
     user_info = State()
     create_link = State()
+
+
+class RecoverySG(StatesGroup):
+    start = State()
+    # В отдельных классах
+    # recovery_users = State()
+    # recovery_chats = State()
+    # recovery_messages = State()
+    # recovery_faq = State()

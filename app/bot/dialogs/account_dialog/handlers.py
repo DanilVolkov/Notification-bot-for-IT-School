@@ -1,11 +1,14 @@
+import logging
+
 from aiogram.types import CallbackQuery, Message
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.input import ManagedTextInput
 from aiogram_dialog.widgets.kbd import Button, Select
 
 from app.bot.consts import labels_texts
-from app.bot.dialogs.states import AccountSG
+from app.bot.dialogs.states import AccountSG, ChatMessagesSG
 
+logger = logging.getLogger(__name__)
 
 async def block_user(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
     user_id = dialog_manager.start_data.get('user_id')
@@ -40,3 +43,16 @@ async def error_info_user(message: Message, widget: ManagedTextInput, dialog_man
 async def save_user_role(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
     # TODO: изменение роли в БД
     await dialog_manager.switch_to(AccountSG.start)
+
+
+async def start_chat_messages_dialog(
+    callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str
+):
+
+    logger.info(f'Выбран чат {item_id}')  # TODO: поменять на название из БД
+    chat_id = item_id  # TODO: здесь должен быть id чата из БД
+    chat_name = 'Базовый Python 2026 1 поток'  # TODO: здесь название чата (бот) из БД
+    # TODO: добавить обработчик ошибок
+    logger.debug('Переходим в диалог MessagesSG')
+    await dialog_manager.switch_to(state=AccountSG.start)
+    await dialog_manager.start(ChatMessagesSG.start, data={'chat_id': chat_id, 'chat_name': chat_name})
