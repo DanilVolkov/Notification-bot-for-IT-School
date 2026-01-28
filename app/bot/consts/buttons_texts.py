@@ -42,4 +42,3 @@ ACTIVATE_USER = '💚Разблокировать'
 CREATE_USER_LINK_YES = '✅Сформировать'
 CREATE_USER_LINK_NO = '❌Отмена'
 CHATS_USER = '📋Чаты пользователя'
-

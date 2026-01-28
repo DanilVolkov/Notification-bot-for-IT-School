@@ -1,10 +1,9 @@
 from aiogram.enums import ContentType
 from aiogram_dialog import Dialog, Window
-from aiogram_dialog.widgets.kbd import SwitchTo, Start
 from aiogram_dialog.widgets.media import StaticMedia
 from aiogram_dialog.widgets.text import Const
 
-from app.bot.consts import labels_texts, buttons_texts
+from app.bot.consts import labels_texts
 from app.bot.consts.paths import PATH_TO_LOGO
 from app.bot.dialogs.recovery import getters
 from app.bot.dialogs.states import RecoverySG
@@ -22,7 +21,7 @@ main_window = Window(
     #     state=RecoverySG.recovery_users
     # ),
     state=RecoverySG.start,
-    getter=getters.get_user
+    getter=getters.get_user,
 )
 
 

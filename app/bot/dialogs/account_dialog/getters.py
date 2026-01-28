@@ -16,19 +16,19 @@ async def get_account(dialog_manager: DialogManager, **kwargs):
     is_find_user_creator = True if find_user_role.lower() == UserRole.CREATOR else False
 
     user_id = dialog_manager.event.from_user.id
-    user_role = dialog_manager.middleware_data.get('user_role').lower()  # TODO: заменить потом на получение объекта их класса
+    user_role = dialog_manager.middleware_data.get(
+        'user_role'
+    ).lower()  # TODO: заменить потом на получение объекта их класса
 
     if find_user_id == user_id and is_find_user_creator:
         # если создатель открыл свой аккаунт, значит он может менять информацию о себе
         is_find_user_creator = False
 
     # Получаем информацию о текущем пользователе, который управляет сейчас ботом
-    is_admin = (
-        True if user_role in [UserRole.CREATOR, UserRole.ADMIN] else False
-    )  # TODO: вынести как свойство в класс
+    is_admin = True if user_role in [UserRole.CREATOR, UserRole.ADMIN] else False  # TODO: вынести как свойство в класс
     is_find_user_blocked = True if find_user_status.lower() == UserStatus.BLOCK else False
-    dialog_manager.dialog_data["find_user_fio"] = find_user_fio
-    dialog_manager.dialog_data["find_user_role"] = find_user_role
+    dialog_manager.dialog_data['find_user_fio'] = find_user_fio
+    dialog_manager.dialog_data['find_user_role'] = find_user_role
 
     return {
         'find_user_fio': find_user_fio,
@@ -42,12 +42,9 @@ async def get_account(dialog_manager: DialogManager, **kwargs):
 
 
 async def get_del_user_info(dialog_manager: DialogManager, **kwargs):
-    del_user_id = dialog_manager.dialog_data.get("del_user_id")
-    del_user_fio = dialog_manager.dialog_data.get("del_user_fio")
-    return {
-        'del_user_id': del_user_id,
-        'del_user_fio': del_user_fio
-    }
+    del_user_id = dialog_manager.dialog_data.get('del_user_id')
+    del_user_fio = dialog_manager.dialog_data.get('del_user_fio')
+    return {'del_user_id': del_user_id, 'del_user_fio': del_user_fio}
 
 
 async def get_user_roles(dialog_manager: DialogManager, **kwargs):
@@ -55,11 +52,8 @@ async def get_user_roles(dialog_manager: DialogManager, **kwargs):
     # TODO: Роль "Создатель" появляется только у того, кто сам создатель
     user_roles = [('Админ', 1), ('Прокуратор', 2), ('Куратор', 3)]
     dialog_manager.dialog_data['roles'] = user_roles
-    current_user_role = dialog_manager.dialog_data.get("user_role")
-    return {
-        'user_roles': user_roles,
-        'current_user_role': current_user_role
-    }
+    current_user_role = dialog_manager.dialog_data.get('user_role')
+    return {'user_roles': user_roles, 'current_user_role': current_user_role}
 
 
 async def get_chats(dialog_manager: DialogManager, **kwargs):

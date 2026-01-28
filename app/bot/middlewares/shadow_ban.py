@@ -2,8 +2,9 @@ import logging
 from typing import Any, Awaitable, Callable
 
 from aiogram import BaseMiddleware
-from aiogram.types import TelegramObject, Update, User
-#from app.infrastructure.database.models.user import UserModel
+from aiogram.types import TelegramObject, Update
+
+# from app.infrastructure.database.models.user import UserModel
 
 logger = logging.getLogger(__name__)
 
@@ -15,15 +16,13 @@ class ShadowBanMiddleware(BaseMiddleware):
         event: Update,
         data: dict[str, Any],
     ) -> Any:
-        user_row = data.get("user_row")
+        user_row = data.get('user_row')
         if user_row is None:
-            logger.info(
-                "Блокировка невозможна. Пользователь не найден в БД."
-            )
+            logger.info('Блокировка невозможна. Пользователь не найден в БД.')
             return await handler(event, data)
 
         if user_row.banned:
-            logger.warning("Заблокированный пользователь попытался взаимодействовать c ботом: %d", user_row.user_id)
+            logger.warning('Заблокированный пользователь попытался взаимодействовать c ботом: %d', user_row.user_id)
             if event.callback_query:
                 await event.callback_query.answer()
             return

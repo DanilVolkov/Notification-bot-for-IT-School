@@ -10,6 +10,7 @@ from app.bot.dialogs.states import AccountSG, ChatMessagesSG
 
 logger = logging.getLogger(__name__)
 
+
 async def block_user(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
     user_id = dialog_manager.start_data.get('user_id')
     # TODO: изменение статуса пользователя в БД
@@ -26,8 +27,8 @@ async def del_user(callback: CallbackQuery, button: Button, dialog_manager: Dial
     user_id = dialog_manager.start_data.get('user_id')
     # TODO: удаление пользователя и получение его ФИО
     user_fio = 'Иванов Иван Иваныч'
-    dialog_manager.dialog_data["del_user_id"] = user_id
-    dialog_manager.dialog_data["del_user_fio"] = user_fio
+    dialog_manager.dialog_data['del_user_id'] = user_id
+    dialog_manager.dialog_data['del_user_fio'] = user_fio
     await dialog_manager.switch_to(AccountSG.del_user_done)
 
 

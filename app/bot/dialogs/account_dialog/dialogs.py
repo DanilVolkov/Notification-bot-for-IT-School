@@ -1,7 +1,7 @@
 from aiogram.enums import ContentType
 from aiogram_dialog import Dialog, Window
-from aiogram_dialog.widgets.input import TextInput, MessageInput
-from aiogram_dialog.widgets.kbd import Button, Cancel, Row, SwitchTo, Column, Select, Group, ScrollingGroup
+from aiogram_dialog.widgets.input import MessageInput, TextInput
+from aiogram_dialog.widgets.kbd import Button, Cancel, Column, Group, Row, ScrollingGroup, Select, SwitchTo
 from aiogram_dialog.widgets.media import StaticMedia
 from aiogram_dialog.widgets.text import Const, Format
 from magic_filter import F
@@ -9,8 +9,7 @@ from magic_filter import F
 from app.bot.consts import buttons_texts, labels_texts
 from app.bot.consts.buttons_texts import CANCEL
 from app.bot.consts.paths import PATH_TO_LOGO
-from app.bot.dialogs.account_dialog import handlers
-from app.bot.dialogs.account_dialog import getters
+from app.bot.dialogs.account_dialog import getters, handlers
 from app.bot.dialogs.states import AccountSG
 from app.bot.handlers import other_handlers
 
@@ -33,37 +32,35 @@ main_window = Window(
                 Const(buttons_texts.BLOCK_USER),
                 id='btn_status_user_active',
                 when=F['is_admin'] & ~F['is_find_user_creator'] & ~F['is_find_user_blocked'],
-                state=AccountSG.block_user
+                state=AccountSG.block_user,
             ),
             SwitchTo(
                 Const(buttons_texts.DEL_USER),
                 id='btn_del_user',
                 when=F['is_admin'] & ~F['is_find_user_creator'],
-                state=AccountSG.del_user
+                state=AccountSG.del_user,
             ),
             SwitchTo(
                 Const(buttons_texts.CHANGE_USERNAME),
                 id='btn_change_username',
                 when=F['is_admin'] & ~F['is_find_user_creator'],
-                state=AccountSG.change_username
+                state=AccountSG.change_username,
             ),
             SwitchTo(
                 Const(buttons_texts.CHANGE_USER_ROLE),
                 id='btn_change_user_role',
                 when=F['is_admin'] & ~F['is_find_user_creator'],
-                state=AccountSG.change_role
+                state=AccountSG.change_role,
             ),
         ),
-        width=buttons_texts.COUNT_USER_BUTTON
-
+        width=buttons_texts.COUNT_USER_BUTTON,
     ),
     SwitchTo(
         Const(buttons_texts.CHATS_USER),
         id='btn_chats_user',
         when=F['is_admin'] & ~F['is_find_user_creator'],
-        state=AccountSG.chats_user
+        state=AccountSG.chats_user,
     ),
-
     Cancel(Const(CANCEL), id='btn_account_cancel'),
     state=AccountSG.start,
     getter=getters.get_account,
@@ -163,6 +160,5 @@ account_dialog = Dialog(
     del_user_done_window,
     change_username_window,
     change_user_role_window,
-    chats_user_window
-
+    chats_user_window,
 )
