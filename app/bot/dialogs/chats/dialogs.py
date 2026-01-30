@@ -9,10 +9,10 @@ from app.bot.consts import buttons_texts, labels_texts
 from app.bot.consts.paths import PATH_TO_LOGO
 from app.bot.dialogs.chats.getters import get_chats, get_copy_chats_name, get_del_chat_name, get_found_chats
 from app.bot.dialogs.chats.handlers import (
-    get_chat_for_del,
     copy_messages,
     del_chat,
     find_chat,
+    get_chat_for_del,
     save_chat_from_copy,
     start_chat_messages_dialog,
 )

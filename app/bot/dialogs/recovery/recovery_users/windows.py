@@ -1,12 +1,12 @@
 from aiogram.enums import ContentType
 from aiogram_dialog import Window
-from aiogram_dialog.widgets.kbd import ScrollingGroup, Select, SwitchTo, Row, Button
+from aiogram_dialog.widgets.kbd import Button, Row, ScrollingGroup, Select, SwitchTo
 from aiogram_dialog.widgets.media import StaticMedia
 from aiogram_dialog.widgets.text import Const, Format
 
-from app.bot.consts import labels_texts, buttons_texts
+from app.bot.consts import buttons_texts, labels_texts
 from app.bot.consts.paths import PATH_TO_LOGO
-from app.bot.dialogs.recovery.recovery_users import handlers, getters
+from app.bot.dialogs.recovery.recovery_users import getters, handlers
 from app.bot.dialogs.states import RecoverySG
 
 recovery_users_window = Window(
