@@ -66,8 +66,9 @@ class AddUserSG(StatesGroup):
 
 class RecoverySG(StatesGroup):
     start = State()
-    # В отдельных классах
-    # recovery_users = State()
+    recovery_users = State()
+    confirm_recovery_user = State()
+    recovery_user_done = State()
     # recovery_chats = State()
     # recovery_messages = State()
-    # recovery_faq = State()
+    recovery_faqs = State()

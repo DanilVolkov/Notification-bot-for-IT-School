@@ -9,7 +9,7 @@ from app.bot.consts import buttons_texts, labels_texts
 from app.bot.consts.paths import PATH_TO_LOGO
 from app.bot.dialogs.chats.getters import get_chats, get_copy_chats_name, get_del_chat_name, get_found_chats
 from app.bot.dialogs.chats.handlers import (
-    confirm_del_chat,
+    get_chat_for_del,
     copy_messages,
     del_chat,
     find_chat,
@@ -49,7 +49,7 @@ del_chat_window = Window(
             id='chats_for_del',
             item_id_getter=lambda x: x[1],  # TODO: доделать удаление чата по его id
             items='list_chats',
-            on_click=confirm_del_chat,
+            on_click=get_chat_for_del,
         ),
         id='chats_paginator_for_del',
         hide_on_single_page=True,

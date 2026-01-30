@@ -11,6 +11,7 @@ from app.bot.dialogs.chat_messages.dialogs import chats_messages_dialog
 from app.bot.dialogs.chats.dialogs import chats_dialog
 from app.bot.dialogs.main_menu.dialogs import main_menu_dialog
 from app.bot.dialogs.message_info.dialogs import message_info_dialog
+from app.bot.dialogs.recovery.dialogs import recovery_dialog
 from app.bot.dialogs.users.dialogs import users_dialog
 from app.bot.handlers.menu_handlers import menu_router
 from app.bot.middlewares.get_user import RoleMiddleware
@@ -63,6 +64,7 @@ async def main(config: Config) -> None:
         chats_dialog,
         chats_messages_dialog,
         message_info_dialog,
+        recovery_dialog
     )
 
     # Подключаем миддлвари в нужном порядке
