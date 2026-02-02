@@ -18,7 +18,7 @@ recovery_users_window = Window(
             id='users',
             item_id_getter=lambda x: x[1],
             items='list_users',
-            on_click=handlers.get_user_for_recovery,
+            on_click=handlers.set_user_for_recovery,
         ),
         id='users_paginator',
         hide_on_single_page=True,
@@ -27,11 +27,18 @@ recovery_users_window = Window(
     ),
     SwitchTo(Const(buttons_texts.CANCEL), id='btn_users_cancel', state=RecoverySG.start),
     state=RecoverySG.recovery_users,
-    getter=getters.get_users,
+    getter=getters.get_del_users,
 )
 
 confirm_recovery_user_window = Window(
-    Format('⚠️ Вы точно хотите восстановить пользователя "{recovery_username}"?'),
+    Format(
+        '⬇️ Информация о пользователе\n\n'
+        'ℹ️ {recovery_username}\n'
+        '🆔 {recovery_user_id}\n'
+        '🎭 {recovery_user_role}\n'
+        '💫 {recovery_user_status}\n\n'
+        '⚠️ Вы точно хотите восстановить пользователя?'
+    ),
     Row(
         Button(text=Const(buttons_texts.YES), id='btn_recovery_user_yes', on_click=handlers.recovery_user),
         SwitchTo(text=Const(buttons_texts.NO), id='btn_recovery_user_no', state=RecoverySG.recovery_users),

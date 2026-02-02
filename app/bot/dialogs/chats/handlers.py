@@ -34,7 +34,7 @@ async def copy_messages(callback: CallbackQuery, widget: Select, dialog_manager:
     await dialog_manager.switch_to(state=ChatsSG.copy_messages_done)
 
 
-async def get_chat_for_del(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
+async def set_chat_for_del(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
     logger.debug(f'Выбран чат для удаления, с id={item_id}')
     dialog_manager.dialog_data['chat_del_id'] = item_id
     dialog_manager.dialog_data['chat_del_name'] = 'Название чата'  # TODO: поменять на название из БД

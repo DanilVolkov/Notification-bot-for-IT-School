@@ -12,7 +12,7 @@ from app.bot.dialogs.chats.handlers import (
     copy_messages,
     del_chat,
     find_chat,
-    get_chat_for_del,
+    set_chat_for_del,
     save_chat_from_copy,
     start_chat_messages_dialog,
 )
@@ -49,7 +49,7 @@ del_chat_window = Window(
             id='chats_for_del',
             item_id_getter=lambda x: x[1],  # TODO: доделать удаление чата по его id
             items='list_chats',
-            on_click=get_chat_for_del,
+            on_click=set_chat_for_del,
         ),
         id='chats_paginator_for_del',
         hide_on_single_page=True,
