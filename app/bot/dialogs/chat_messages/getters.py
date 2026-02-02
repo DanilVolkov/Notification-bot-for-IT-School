@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 async def get_chat_messages(dialog_manager: DialogManager, **kwargs):
     # TODO: получение сообщений из чата их статуса и их парсинг по стикерам
-    chat_id = dialog_manager.start_data.get("chat_id")
+    chat_id = dialog_manager.start_data.get('chat_id')
     chat_name = dialog_manager.start_data.get('chat_name')
 
     # TODO: получить статусы сообщений, названия, текста и времени из БД
@@ -35,7 +35,9 @@ async def get_chat_info(dialog_manager: DialogManager, **kwargs):
 
 async def get_found_messages(dialog_manager: DialogManager, **kwargs):
     found_messages = dialog_manager.dialog_data.get('found_messages')
-    found_messages = [(chat_name, index) for index, chat_name in enumerate(found_messages)]
+    found_messages = [
+        (chat_name, index) for index, chat_name in enumerate(found_messages)
+    ]
     is_found_messages = True if found_messages else False
     return {
         'found_messages': found_messages,

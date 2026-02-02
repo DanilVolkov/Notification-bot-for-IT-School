@@ -19,14 +19,20 @@ menu_router = Router()
 
 # здесь добавить фильтр на роль пользователя
 @menu_router.message(CommandStart())
-async def command_start_process(message: Message, dialog_manager: DialogManager):
+async def command_start_process(
+    message: Message, dialog_manager: DialogManager
+):
     # есть ли пользователь в БД, если да - то получение роли
     # если нет - то устанавливаем как для неизвестного
     # если идёт сообщение в чате от пользователя, который есть в списке - реагируем. Иначе нет.
     if message.chat.type == 'private':
         await bot.set_my_commands(
-            commands=set_main_menu(UserRole.ADMIN),  # TODO: потом поменять исходя из роли
-            scope=BotCommandScopeChat(type=BotCommandScopeType.CHAT, chat_id=message.from_user.id),
+            commands=set_main_menu(
+                UserRole.ADMIN
+            ),  # TODO: потом поменять исходя из роли
+            scope=BotCommandScopeChat(
+                type=BotCommandScopeType.CHAT, chat_id=message.from_user.id
+            ),
         )
         if len(message.text.split()) > 1:
             link = message.text.split()[1]

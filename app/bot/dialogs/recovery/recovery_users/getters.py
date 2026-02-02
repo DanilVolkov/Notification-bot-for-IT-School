@@ -15,10 +15,12 @@ async def get_recovery_user(dialog_manager: DialogManager, **kwargs):
     recovery_username = dialog_manager.dialog_data.get('recovery_username')
     recovery_user_id = dialog_manager.dialog_data.get('recovery_user_id')
     recovery_user_role = dialog_manager.dialog_data.get('recovery_user_role')
-    recovery_user_status = dialog_manager.dialog_data.get('recovery_user_status')
+    recovery_user_status = dialog_manager.dialog_data.get(
+        'recovery_user_status'
+    )
     return {
         'recovery_username': recovery_username,
         'recovery_user_id': recovery_user_id,
         'recovery_user_role': recovery_user_role,
-        'recovery_user_status': recovery_user_status
+        'recovery_user_status': recovery_user_status,
     }

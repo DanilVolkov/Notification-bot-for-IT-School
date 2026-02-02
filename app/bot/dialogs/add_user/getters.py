@@ -14,7 +14,11 @@ async def get_user_info(dialog_manager: DialogManager, **kwargs):
     user_role_id = dialog_manager.dialog_data.get('user_role_id')
     user_role: str = dialog_manager.dialog_data.get('user_role')
 
-    return {'user_fio': user_fio, 'user_role_id': user_role_id, 'user_role': user_role.capitalize()}
+    return {
+        'user_fio': user_fio,
+        'user_role_id': user_role_id,
+        'user_role': user_role.capitalize(),
+    }
 
 
 async def get_user_link(dialog_manager: DialogManager, **kwargs):

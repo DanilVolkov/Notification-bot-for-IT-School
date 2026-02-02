@@ -10,16 +10,31 @@ from app.bot.consts import labels_texts
 from app.bot.dialogs.states import AddUserSG
 
 
-async def save_fio_user(message: Message, widget: ManagedTextInput, dialog_manager: DialogManager, text: str):
+async def save_fio_user(
+    message: Message,
+    widget: ManagedTextInput,
+    dialog_manager: DialogManager,
+    text: str,
+):
     dialog_manager.dialog_data['user_fio'] = text
     await dialog_manager.switch_to(AddUserSG.add_role)
 
 
-async def error_info_user(message: Message, widget: ManagedTextInput, dialog_manager: DialogManager, error: ValueError):
+async def error_info_user(
+    message: Message,
+    widget: ManagedTextInput,
+    dialog_manager: DialogManager,
+    error: ValueError,
+):
     await message.answer(labels_texts.INCORRECT_INFO_USER)
 
 
-async def save_user_info(callback: CallbackQuery, widget: Select, dialog_manager: DialogManager, item_id: str):
+async def save_user_info(
+    callback: CallbackQuery,
+    widget: Select,
+    dialog_manager: DialogManager,
+    item_id: str,
+):
     roles = dialog_manager.dialog_data.get('roles')
     role_id = int(item_id)
     user_role = next(filter(lambda role: role[1] == role_id, roles))[0]
@@ -33,7 +48,9 @@ async def save_user_info(callback: CallbackQuery, widget: Select, dialog_manager
     )  # TODO: подумать, как удалять токен через день после создания в БД
 
 
-async def create_user_link(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
+async def create_user_link(
+    callback: CallbackQuery, button: Button, dialog_manager: DialogManager
+):
     # TODO: заменить на redis
 
     # def create_registration_token(user_data: dict, ttl_seconds: int = 86400):

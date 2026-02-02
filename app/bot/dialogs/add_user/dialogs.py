@@ -1,14 +1,25 @@
 from aiogram.enums import ContentType
 from aiogram_dialog import Dialog, Window
 from aiogram_dialog.widgets.input import MessageInput, TextInput
-from aiogram_dialog.widgets.kbd import Button, Cancel, Column, Row, Select, SwitchTo
+from aiogram_dialog.widgets.kbd import (
+    Button,
+    Cancel,
+    Column,
+    Row,
+    Select,
+    SwitchTo,
+)
 from aiogram_dialog.widgets.media import StaticMedia
 from aiogram_dialog.widgets.text import Const, Format
 
 from app.bot.consts import buttons_texts, labels_texts
 from app.bot.consts.paths import PATH_TO_LOGO
 from app.bot.dialogs.add_user import handlers
-from app.bot.dialogs.add_user.getters import get_user_info, get_user_link, get_user_roles
+from app.bot.dialogs.add_user.getters import (
+    get_user_info,
+    get_user_link,
+    get_user_roles,
+)
 from app.bot.dialogs.states import AddUserSG
 from app.bot.handlers import other_handlers
 
@@ -38,16 +49,26 @@ add_role_window = Window(
             on_click=handlers.save_user_info,
         ),
     ),
-    SwitchTo(Const(buttons_texts.CANCEL), id='btn_add_role_cancel', state=AddUserSG.start),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_add_role_cancel',
+        state=AddUserSG.start,
+    ),
     state=AddUserSG.add_role,
     getter=get_user_roles,
 )
 
 user_info_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
-    Format('Будет сформирована ссылка для пользователя:\n\nℹ️ {user_fio}\n🔑 {user_role}'),
+    Format(
+        'Будет сформирована ссылка для пользователя:\n\nℹ️ {user_fio}\n🔑 {user_role}'
+    ),
     Row(
-        Button(Const(buttons_texts.CREATE_USER_LINK_YES), id='btn_add_link_yes', on_click=handlers.create_user_link),
+        Button(
+            Const(buttons_texts.CREATE_USER_LINK_YES),
+            id='btn_add_link_yes',
+            on_click=handlers.create_user_link,
+        ),
         Cancel(Const(buttons_texts.CREATE_USER_LINK_NO)),
     ),
     state=AddUserSG.user_info,
@@ -63,4 +84,6 @@ create_link_window = Window(
 )
 
 
-add_user_dialog = Dialog(main_window, add_role_window, user_info_window, create_link_window)
+add_user_dialog = Dialog(
+    main_window, add_role_window, user_info_window, create_link_window
+)

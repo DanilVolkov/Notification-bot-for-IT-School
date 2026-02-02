@@ -60,7 +60,9 @@ async def get_message_info(dialog_manager: DialogManager, **kwargs):
     dialog_manager.dialog_data['message_status'] = message_status
 
     if (message_status.SENT or message_status.PLANNED) and message_datetime:
-        message_status_sticker = get_sticker_from_status_message(message_status)
+        message_status_sticker = get_sticker_from_status_message(
+            message_status
+        )
         message_status_text = get_text_from_status_message(message_status)
 
         message_date = message_datetime.split()[0]
@@ -93,4 +95,8 @@ async def get_message_datetime(dialog_manager: DialogManager, **kwargs):
     if message_datetime:
         is_datetime = True
 
-    return {'message_datetime': message_datetime, 'is_datetime': is_datetime, 'not_is_datetime': not is_datetime}
+    return {
+        'message_datetime': message_datetime,
+        'is_datetime': is_datetime,
+        'not_is_datetime': not is_datetime,
+    }

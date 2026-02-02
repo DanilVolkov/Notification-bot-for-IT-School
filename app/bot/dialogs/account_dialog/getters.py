@@ -13,7 +13,9 @@ async def get_account(dialog_manager: DialogManager, **kwargs):
     find_user_status = 'Активен'
     # TODO: добавить логику, что если я ищу сам себя, то я могу менять о себе информацию
 
-    is_find_user_creator = True if find_user_role.lower() == UserRole.CREATOR else False
+    is_find_user_creator = (
+        True if find_user_role.lower() == UserRole.CREATOR else False
+    )
 
     user_id = dialog_manager.event.from_user.id
     user_role = dialog_manager.middleware_data.get(
@@ -25,8 +27,12 @@ async def get_account(dialog_manager: DialogManager, **kwargs):
         is_find_user_creator = False
 
     # Получаем информацию о текущем пользователе, который управляет сейчас ботом
-    is_admin = True if user_role in [UserRole.CREATOR, UserRole.ADMIN] else False  # TODO: вынести как свойство в класс
-    is_find_user_blocked = True if find_user_status.lower() == UserStatus.BLOCK else False
+    is_admin = (
+        True if user_role in [UserRole.CREATOR, UserRole.ADMIN] else False
+    )  # TODO: вынести как свойство в класс
+    is_find_user_blocked = (
+        True if find_user_status.lower() == UserStatus.BLOCK else False
+    )
     dialog_manager.dialog_data['find_user_fio'] = find_user_fio
     dialog_manager.dialog_data['find_user_role'] = find_user_role
 

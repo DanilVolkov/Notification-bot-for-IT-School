@@ -40,7 +40,13 @@ async def get_del_chat_name(
 
 async def get_found_chats(dialog_manager: DialogManager, **kwargs):
     found_chats = dialog_manager.dialog_data.get('found_chats')
-    found_chats = [(chat_name, index) for index, chat_name in enumerate(found_chats)]
+    found_chats = [
+        (chat_name, index) for index, chat_name in enumerate(found_chats)
+    ]
     dialog_manager.dialog_data.clear()
     is_found_chats = True if found_chats else False
-    return {'found_chats': found_chats, 'is_found_chats': is_found_chats, 'is_not_found_chats': not is_found_chats}
+    return {
+        'found_chats': found_chats,
+        'is_found_chats': is_found_chats,
+        'is_not_found_chats': not is_found_chats,
+    }

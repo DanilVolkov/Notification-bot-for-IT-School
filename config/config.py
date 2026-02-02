@@ -61,7 +61,9 @@ def load_config(path: str | None = None) -> Config:
     if not token:
         raise ValueError('BOT_TOKEN must not be empty')
 
-    raw_ids = env.list('ADMIN_IDS', default=[])  # TODO: удалить после подключения БД
+    raw_ids = env.list(
+        'ADMIN_IDS', default=[]
+    )  # TODO: удалить после подключения БД
 
     try:
         admin_ids = [int(x) for x in raw_ids]
@@ -84,7 +86,9 @@ def load_config(path: str | None = None) -> Config:
     #     username=env("REDIS_USERNAME", default=""),
     # )
 
-    log_settings = LogSettings(level=env('LOG_LEVEL'), format=env('LOG_FORMAT'))
+    log_settings = LogSettings(
+        level=env('LOG_LEVEL'), format=env('LOG_FORMAT')
+    )
 
     logger.info('Configuration loaded successfully')
 

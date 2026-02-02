@@ -22,7 +22,10 @@ class ShadowBanMiddleware(BaseMiddleware):
             return await handler(event, data)
 
         if user_row.banned:
-            logger.warning('Заблокированный пользователь попытался взаимодействовать c ботом: %d', user_row.user_id)
+            logger.warning(
+                'Заблокированный пользователь попытался взаимодействовать c ботом: %d',
+                user_row.user_id,
+            )
             if event.callback_query:
                 await event.callback_query.answer()
             return

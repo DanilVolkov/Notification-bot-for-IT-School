@@ -13,7 +13,9 @@ from app.bot.consts import errors_descriptions, labels_texts
 logger = logging.getLogger(__name__)
 
 
-async def no_text(message: Message, widget: MessageInput, dialog_manager: DialogManager):
+async def no_text(
+    message: Message, widget: MessageInput, dialog_manager: DialogManager
+):
     await message.answer(labels_texts.NO_TEXT)
 
 
@@ -27,7 +29,12 @@ def datetime_check(text: Any) -> str:
     return text
 
 
-async def error_datetime(message: Message, widget: ManagedTextInput, dialog_manager: DialogManager, error: ValueError):
+async def error_datetime(
+    message: Message,
+    widget: ManagedTextInput,
+    dialog_manager: DialogManager,
+    error: ValueError,
+):
     logger.debug(f'Ошибка при добавлении даты и времени: {error}')
     if errors_descriptions.INCORRECT_DATETIME_FORMAT in str(error):
         await message.answer(labels_texts.ERROR_TYPE_DATETIME)
@@ -46,7 +53,9 @@ def check_correct_table(file_path: str) -> tuple[bool, str, DataFrame]:
         invalid_dates = []
         for idx, date in enumerate(df[labels_texts.COLUMN_DATETIME_NAME]):
             # убираем секунды
-            date_str = str(date)[:-3] if str(date).count(':') == 2 else str(date)
+            date_str = (
+                str(date)[:-3] if str(date).count(':') == 2 else str(date)
+            )
 
             # пытаемся менять формат даты, если он неверный
             try:
@@ -59,11 +68,19 @@ def check_correct_table(file_path: str) -> tuple[bool, str, DataFrame]:
                 try:
                     datetime_check(date_str)
                 except ValueError as ex:
-                    error_description = errors_descriptions.INCORRECT_DATETIME_FORMAT
-                    if errors_descriptions.INCORRECT_DATETIME_MOMENT in str(ex):
-                        error_description = errors_descriptions.INCORRECT_DATETIME_MOMENT
+                    error_description = (
+                        errors_descriptions.INCORRECT_DATETIME_FORMAT
+                    )
+                    if errors_descriptions.INCORRECT_DATETIME_MOMENT in str(
+                        ex
+                    ):
+                        error_description = (
+                            errors_descriptions.INCORRECT_DATETIME_MOMENT
+                        )
 
-                    invalid_dates.append(f'➡️ Строка {idx + 2}: {date_str} - {error_description}')
+                    invalid_dates.append(
+                        f'➡️ Строка {idx + 2}: {date_str} - {error_description}'
+                    )
 
         if invalid_dates:
             err_msg = '⚠️ Некорректные даты:\n' + '\n'.join(invalid_dates)

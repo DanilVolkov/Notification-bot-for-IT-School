@@ -24,6 +24,5 @@ async def get_recovery_chat(dialog_manager: DialogManager, **kwargs):
     recovery_mode = dialog_manager.dialog_data.get('recovery_mode')
     return {
         'recovery_chat_name': recovery_chat_name,
-        'recovery_mode': recovery_mode
+        'recovery_mode': recovery_mode,
     }
-

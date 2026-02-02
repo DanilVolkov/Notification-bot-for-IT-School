@@ -1,7 +1,16 @@
 from aiogram.enums import ContentType
 from aiogram_dialog import Dialog, Window
 from aiogram_dialog.widgets.input import MessageInput, TextInput
-from aiogram_dialog.widgets.kbd import Button, Cancel, Column, Group, Row, ScrollingGroup, Select, SwitchTo
+from aiogram_dialog.widgets.kbd import (
+    Button,
+    Cancel,
+    Column,
+    Group,
+    Row,
+    ScrollingGroup,
+    Select,
+    SwitchTo,
+)
 from aiogram_dialog.widgets.media import StaticMedia
 from aiogram_dialog.widgets.text import Const, Format
 from magic_filter import F
@@ -19,19 +28,26 @@ main_window = Window(
         '⬇️ Информация о пользователе\n\nℹ️ {find_user_fio}\n🆔 {find_user_id}\n🎭 {find_user_role}\n💫 {find_user_status}',
         when=F['is_admin'],
     ),
-    Format('Личный кабинет\n\nℹ️ {find_user_fio}\n🆔 {find_user_id}\n🔑 {find_user_role}', when=~F['is_admin']),
+    Format(
+        'Личный кабинет\n\nℹ️ {find_user_fio}\n🆔 {find_user_id}\n🔑 {find_user_role}',
+        when=~F['is_admin'],
+    ),
     Group(
         Row(
             Button(
                 Const(buttons_texts.ACTIVATE_USER),
                 id='btn_status_user_block',
                 on_click=handlers.activate_user,
-                when=F['is_admin'] & ~F['is_find_user_creator'] & F['is_find_user_blocked'],
+                when=F['is_admin']
+                & ~F['is_find_user_creator']
+                & F['is_find_user_blocked'],
             ),
             SwitchTo(
                 Const(buttons_texts.BLOCK_USER),
                 id='btn_status_user_active',
-                when=F['is_admin'] & ~F['is_find_user_creator'] & ~F['is_find_user_blocked'],
+                when=F['is_admin']
+                & ~F['is_find_user_creator']
+                & ~F['is_find_user_blocked'],
                 state=AccountSG.block_user,
             ),
             SwitchTo(
@@ -70,8 +86,16 @@ main_window = Window(
 block_user_window = Window(
     Format('⚠️ Вы точно хотите заблокировать пользователя "{find_user_fio}"?'),
     Row(
-        Button(text=Const(buttons_texts.YES), id='btn_block_user_yes', on_click=handlers.block_user),
-        SwitchTo(text=Const(buttons_texts.NO), id='btn_block_user_no', state=AccountSG.start),
+        Button(
+            text=Const(buttons_texts.YES),
+            id='btn_block_user_yes',
+            on_click=handlers.block_user,
+        ),
+        SwitchTo(
+            text=Const(buttons_texts.NO),
+            id='btn_block_user_no',
+            state=AccountSG.start,
+        ),
     ),
     state=AccountSG.block_user,
     getter=getters.get_account,
@@ -80,8 +104,16 @@ block_user_window = Window(
 del_user_window = Window(
     Format('⚠️ Вы точно хотите удалить пользователя "{find_user_fio}"?'),
     Row(
-        Button(text=Const(buttons_texts.YES), id='btn_block_user_yes', on_click=handlers.del_user),
-        SwitchTo(text=Const(buttons_texts.NO), id='btn_block_user_no', state=AccountSG.start),
+        Button(
+            text=Const(buttons_texts.YES),
+            id='btn_block_user_yes',
+            on_click=handlers.del_user,
+        ),
+        SwitchTo(
+            text=Const(buttons_texts.NO),
+            id='btn_block_user_no',
+            state=AccountSG.start,
+        ),
     ),
     state=AccountSG.del_user,
     getter=getters.get_account,
@@ -89,7 +121,9 @@ del_user_window = Window(
 
 
 del_user_done_window = Window(
-    Format('✅ Пользователь "{del_user_fio}" с id={del_user_id} успешно удален!'),
+    Format(
+        '✅ Пользователь "{del_user_fio}" с id={del_user_id} успешно удален!'
+    ),
     Cancel(Const(buttons_texts.CANCEL)),
     state=AccountSG.del_user_done,
     getter=getters.get_del_user_info,
@@ -107,7 +141,11 @@ change_username_window = Window(
         on_error=handlers.error_info_user,
     ),
     MessageInput(func=other_handlers.no_text),
-    SwitchTo(Const(buttons_texts.CANCEL), id='btn_add_username_cancel', state=AccountSG.start),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_add_username_cancel',
+        state=AccountSG.start,
+    ),
     state=AccountSG.change_username,
     getter=getters.get_account,
 )
@@ -126,7 +164,11 @@ change_user_role_window = Window(
             on_click=handlers.save_user_role,
         ),
     ),
-    SwitchTo(Const(buttons_texts.CANCEL), id='btn_add_role_cancel', state=AccountSG.start),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_add_role_cancel',
+        state=AccountSG.start,
+    ),
     state=AccountSG.change_role,
     getter=getters.get_user_roles,
 )
@@ -147,7 +189,11 @@ chats_user_window = Window(
         width=buttons_texts.COUNT_CHATS_WIDTH,
         height=buttons_texts.COUNT_CHATS_HEIGHT,
     ),
-    SwitchTo(Const(buttons_texts.CANCEL), id='btn_chats_user_cancel', state=AccountSG.start),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_chats_user_cancel',
+        state=AccountSG.start,
+    ),
     state=AccountSG.chats_user,
     getter=getters.get_chats,
 )

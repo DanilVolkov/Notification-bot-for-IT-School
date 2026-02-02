@@ -27,8 +27,14 @@ main_menu_dialog = Dialog(
                 id='btn_main_menu_account',
                 on_click=handlers.start_account_dialog,
             ),
-            Start(text=Const(buttons_texts.MAIN_MENU_CHATS), id='btn_main_menu_chats', state=ChatsSG.start),
-            Button(text=Const(buttons_texts.MAIN_MENU_FAQ), id='btn_main_menu_faq'),  # TODO: доделать меню FAQ
+            Start(
+                text=Const(buttons_texts.MAIN_MENU_CHATS),
+                id='btn_main_menu_chats',
+                state=ChatsSG.start,
+            ),
+            Button(
+                text=Const(buttons_texts.MAIN_MENU_FAQ), id='btn_main_menu_faq'
+            ),  # TODO: доделать меню FAQ
             Start(
                 text=Const(buttons_texts.MAIN_MENU_RECOVERY),
                 id='btn_main_menu_recovery',

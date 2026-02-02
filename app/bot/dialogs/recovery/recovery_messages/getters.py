@@ -11,13 +11,18 @@ async def get_chats_del_messages(dialog_manager: DialogManager, **kwargs):
         ('Javascript junior', 3),
     ]
 
-
     return {'list_chats': chats}
 
 
-async def get_chat_messages_for_recovery(dialog_manager: DialogManager, **kwargs):
-    chat_recovery_msgs_id = dialog_manager.dialog_data.get('chat_recovery_msgs_id')
-    is_chat_recovery_msgs_del = dialog_manager.dialog_data.get('is_chat_recovery_msgs_del')
+async def get_chat_messages_for_recovery(
+    dialog_manager: DialogManager, **kwargs
+):
+    chat_recovery_msgs_id = dialog_manager.dialog_data.get(
+        'chat_recovery_msgs_id'
+    )
+    is_chat_recovery_msgs_del = dialog_manager.dialog_data.get(
+        'is_chat_recovery_msgs_del'
+    )
     # TODO: получение списка сообщений из таблицы удаленных сообщений по фильтру чата
     del_messages = [
         ('🕒 <дата> <время> <название>', 1),
@@ -26,20 +31,21 @@ async def get_chat_messages_for_recovery(dialog_manager: DialogManager, **kwargs
     ]
     return {
         'is_chat_recovery_msgs_del': is_chat_recovery_msgs_del,
-        'del_messages': del_messages
+        'del_messages': del_messages,
     }
 
 
 async def get_recovery_message_info(dialog_manager: DialogManager, **kwargs):
-    is_chat_recovery_msgs_del = dialog_manager.dialog_data.get('is_chat_recovery_msgs_del')
+    is_chat_recovery_msgs_del = dialog_manager.dialog_data.get(
+        'is_chat_recovery_msgs_del'
+    )
     # TODO: получение информации сообщения по id сообщения
     recovery_message_id = dialog_manager.dialog_data.get('recovery_message_id')
 
     # TODO: вынести из message_info/getters -> get_message_info функции в other_handlers
     recovery_message_info = ''
 
-
     return {
         'is_chat_recovery_msgs_del': is_chat_recovery_msgs_del,
-        'recovery_message_info': recovery_message_info
+        'recovery_message_info': recovery_message_info,
     }

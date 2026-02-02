@@ -1,7 +1,14 @@
 from aiogram.enums import ContentType
 from aiogram_dialog import Dialog, Window
 from aiogram_dialog.widgets.input import MessageInput, TextInput
-from aiogram_dialog.widgets.kbd import Button, Cancel, Row, ScrollingGroup, Select, SwitchTo
+from aiogram_dialog.widgets.kbd import (
+    Button,
+    Cancel,
+    Row,
+    ScrollingGroup,
+    Select,
+    SwitchTo,
+)
 from aiogram_dialog.widgets.media import StaticMedia
 from aiogram_dialog.widgets.text import Const, Format
 
@@ -20,13 +27,25 @@ from app.bot.handlers import other_handlers
 main_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
     Format('💬 {chat_name}'),
-    SwitchTo(text=Const(buttons_texts.ADD_MESSAGE), id='btn_add_message', state=ChatMessagesSG.add_message_name),
-    SwitchTo(text=Const(buttons_texts.FIND_MESSAGE), id='btn_find_message', state=ChatMessagesSG.find_messages),
     SwitchTo(
-        text=Const(buttons_texts.CHANGE_CHAT_NAME), id='btn_change_chat_name', state=ChatMessagesSG.change_chat_name
+        text=Const(buttons_texts.ADD_MESSAGE),
+        id='btn_add_message',
+        state=ChatMessagesSG.add_message_name,
     ),
     SwitchTo(
-        text=Const(buttons_texts.CHAT_MESSAGES), id='btn_list_messages_chat_name', state=ChatMessagesSG.list_messages
+        text=Const(buttons_texts.FIND_MESSAGE),
+        id='btn_find_message',
+        state=ChatMessagesSG.find_messages,
+    ),
+    SwitchTo(
+        text=Const(buttons_texts.CHANGE_CHAT_NAME),
+        id='btn_change_chat_name',
+        state=ChatMessagesSG.change_chat_name,
+    ),
+    SwitchTo(
+        text=Const(buttons_texts.CHAT_MESSAGES),
+        id='btn_list_messages_chat_name',
+        state=ChatMessagesSG.list_messages,
     ),
     SwitchTo(
         text=Const(text=buttons_texts.DOWNLOAD_MESSAGES_FROM_EXCEL),
@@ -54,7 +73,11 @@ list_messages_windows = Window(
         width=buttons_texts.COUNT_MESSAGES_WIDTH,
         height=buttons_texts.COUNT_MESSAGES_HEIGHT,
     ),
-    SwitchTo(Const(buttons_texts.CANCEL), id='btn_list_messages_cancel', state=ChatMessagesSG.start),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_list_messages_cancel',
+        state=ChatMessagesSG.start,
+    ),
     state=ChatMessagesSG.list_messages,
     getter=get_chat_messages,
 )
@@ -62,10 +85,18 @@ list_messages_windows = Window(
 add_message_name_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
     Const(labels_texts.NAME_MESSAGE),
-    TextInput(id='name_message_input', type_factory=str, on_success=handlers.save_message_name),
+    TextInput(
+        id='name_message_input',
+        type_factory=str,
+        on_success=handlers.save_message_name,
+    ),
     MessageInput(func=other_handlers.no_text),
     # TODO: здесь записываем только в dialog_data, в БД загрузка только после заполнения всех полей
-    SwitchTo(Const(buttons_texts.CANCEL), id='btn_add_message_name_cancel', state=ChatMessagesSG.start),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_add_message_name_cancel',
+        state=ChatMessagesSG.start,
+    ),
     state=ChatMessagesSG.add_message_name,
 )
 
@@ -73,9 +104,17 @@ add_message_name_window = Window(
 add_message_text_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
     Const(labels_texts.TEXT_MESSAGE),
-    TextInput(id='text_message_input', type_factory=str, on_success=handlers.save_message_text),
+    TextInput(
+        id='text_message_input',
+        type_factory=str,
+        on_success=handlers.save_message_text,
+    ),
     MessageInput(func=other_handlers.no_text),
-    SwitchTo(Const(buttons_texts.CANCEL), id='btn_add_message_text_cancel', state=ChatMessagesSG.add_message_name),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_add_message_text_cancel',
+        state=ChatMessagesSG.add_message_name,
+    ),
     state=ChatMessagesSG.add_message_text,
 )
 
@@ -96,7 +135,9 @@ add_message_datetime_window = Window(
             on_click=handlers.save_message_without_datetime_and_start_message_info_dialog,
         ),
         SwitchTo(
-            Const(buttons_texts.CANCEL), id='btn_add_message_datetime_cancel', state=ChatMessagesSG.add_message_text
+            Const(buttons_texts.CANCEL),
+            id='btn_add_message_datetime_cancel',
+            state=ChatMessagesSG.add_message_text,
         ),
     ),
     state=ChatMessagesSG.add_message_datetime,
@@ -106,12 +147,21 @@ add_message_datetime_window = Window(
 change_chat_name = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
     Format(
-        'Текущее название чата:\n<code>{chat_name}</code>\n\n' + f'{labels_texts.CHAT_NAME_INFO}\n\n'
+        'Текущее название чата:\n<code>{chat_name}</code>\n\n'
+        + f'{labels_texts.CHAT_NAME_INFO}\n\n'
         f'{labels_texts.CHAT_NAME}'
     ),
-    TextInput(id='new_chat_name_input', type_factory=str, on_success=handlers.update_chat_name),
+    TextInput(
+        id='new_chat_name_input',
+        type_factory=str,
+        on_success=handlers.update_chat_name,
+    ),
     MessageInput(func=other_handlers.no_text),
-    SwitchTo(Const(buttons_texts.CANCEL), id='btn_change_chat_name_cancel', state=ChatMessagesSG.start),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_change_chat_name_cancel',
+        state=ChatMessagesSG.start,
+    ),
     state=ChatMessagesSG.change_chat_name,
     getter=get_chat_name,
 )
@@ -120,9 +170,15 @@ change_chat_name = Window(
 find_message_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
     Const(labels_texts.FIND_MESSAGE),
-    TextInput(id='chat_input', type_factory=str, on_success=handlers.find_message),
+    TextInput(
+        id='chat_input', type_factory=str, on_success=handlers.find_message
+    ),
     MessageInput(func=other_handlers.no_text),
-    SwitchTo(Const(buttons_texts.CANCEL), id='btn_find_messages_cancel', state=ChatMessagesSG.start),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_find_messages_cancel',
+        state=ChatMessagesSG.start,
+    ),
     state=ChatMessagesSG.find_messages,
 )
 
@@ -135,7 +191,9 @@ found_messages_window = Window(
         Select(
             Format('{item[0]}'),
             id='found_messages_id',
-            item_id_getter=lambda x: x[1],  # TODO: доделать копирование сообщений чата по его id
+            item_id_getter=lambda x: x[
+                1
+            ],  # TODO: доделать копирование сообщений чата по его id
             items='found_messages',
             on_click=handlers.start_message_info_dialog,
         ),
@@ -144,7 +202,11 @@ found_messages_window = Window(
         width=buttons_texts.COUNT_MESSAGES_WIDTH,
         height=buttons_texts.COUNT_MESSAGES_HEIGHT,
     ),
-    SwitchTo(Const(buttons_texts.CANCEL), id='btn_found_messages_cancel', state=ChatMessagesSG.start),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_found_messages_cancel',
+        state=ChatMessagesSG.start,
+    ),
     state=ChatMessagesSG.found_messages,
     getter=get_found_messages,
 )
@@ -153,15 +215,26 @@ found_messages_window = Window(
 download_msgs_from_excel_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
     Const(labels_texts.DOWNLOAD_MESSAGES_FROM_EXCEL),
-    MessageInput(func=handlers.download_msgs_from_excel, content_types=ContentType.DOCUMENT),
-    SwitchTo(Const(buttons_texts.CANCEL), id='btn_download_msgs_from_excel_cancel', state=ChatMessagesSG.start),
+    MessageInput(
+        func=handlers.download_msgs_from_excel,
+        content_types=ContentType.DOCUMENT,
+    ),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_download_msgs_from_excel_cancel',
+        state=ChatMessagesSG.start,
+    ),
     state=ChatMessagesSG.download_msgs_from_excel,
 )
 
 
 download_msgs_from_excel_done = Window(
     Format('✅ Сообщения загружены в чат "{chat_name}"'),
-    SwitchTo(Const(buttons_texts.CANCEL), id='btn_download_msgs_from_excel_done_cancel', state=ChatMessagesSG.start),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_download_msgs_from_excel_done_cancel',
+        state=ChatMessagesSG.start,
+    ),
     state=ChatMessagesSG.download_msgs_from_excel_done,
     getter=get_chat_name,
 )
