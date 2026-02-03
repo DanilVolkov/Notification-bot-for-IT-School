@@ -15,20 +15,8 @@ from aiogram_dialog.widgets.text import Const, Format
 
 from app.bot.consts import buttons_texts, labels_texts
 from app.bot.consts.paths import PATH_TO_LOGO
-from app.bot.dialogs.chats.getters import (
-    get_chats,
-    get_copy_chats_name,
-    get_del_chat_name,
-    get_found_chats,
-)
-from app.bot.dialogs.chats.handlers import (
-    copy_messages,
-    del_chat,
-    find_chat,
-    save_chat_from_copy,
-    set_chat_for_del,
-    start_chat_messages_dialog,
-)
+from app.bot.dialogs.chats import getters
+from app.bot.dialogs.chats import handlers
 from app.bot.dialogs.states import ChatsSG
 from app.bot.handlers.other_handlers import no_text
 
@@ -84,11 +72,10 @@ del_chat_window = Window(
         Select(
             Format('{item[0]}'),
             id='chats_for_del',
-            item_id_getter=lambda x: x[
-                1
-            ],  # TODO: доделать удаление чата по его id
+            # TODO: доделать удаление чата по его id
+            item_id_getter=lambda x: x[1],
             items='list_chats',
-            on_click=set_chat_for_del,
+            on_click=handlers.set_chat_for_del,
         ),
         id='chats_paginator_for_del',
         hide_on_single_page=True,
@@ -101,7 +88,7 @@ del_chat_window = Window(
         state=ChatsSG.start,
     ),
     state=ChatsSG.del_chat,
-    getter=get_chats,
+    getter=getters.get_chats,
 )
 
 confirm_del_chat_window = Window(
@@ -112,7 +99,7 @@ confirm_del_chat_window = Window(
         Button(
             text=Const(buttons_texts.YES),
             id='btn_del_chat_yes',
-            on_click=del_chat,
+            on_click=handlers.del_chat,
         ),
         SwitchTo(
             text=Const(buttons_texts.NO),
@@ -121,7 +108,7 @@ confirm_del_chat_window = Window(
         ),
     ),
     state=ChatsSG.del_chat_confirm,
-    getter=get_del_chat_name,
+    getter=getters.get_del_chat_name,
 )
 
 del_chat_done_window = Window(
@@ -134,13 +121,13 @@ del_chat_done_window = Window(
         state=ChatsSG.start,
     ),
     state=ChatsSG.del_chat_done,
-    getter=get_del_chat_name,
+    getter=getters.get_del_chat_name,
 )
 
 find_chat_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
     Const(labels_texts.FIND_CHAT),
-    TextInput(id='chat_input', type_factory=str, on_success=find_chat),
+    TextInput(id='chat_input', type_factory=str, on_success=handlers.find_chat),
     MessageInput(func=no_text),
     SwitchTo(
         Const(buttons_texts.CANCEL),
@@ -162,7 +149,7 @@ found_chats_window = Window(
                 1
             ],  # TODO: доделать копирование сообщений чата по его id
             items='found_chats',
-            on_click=start_chat_messages_dialog,  # TODO: добавить открытие сообщений чата
+            on_click=handlers.start_chat_messages_dialog,  # TODO: добавить открытие сообщений чата
         ),
         id='found_chats_paginator',
         hide_on_single_page=True,
@@ -175,7 +162,7 @@ found_chats_window = Window(
         state=ChatsSG.start,
     ),
     state=ChatsSG.found_chats,
-    getter=get_found_chats,
+    getter=getters.get_found_chats,
 )
 
 
@@ -190,7 +177,7 @@ copy_message_from_chat_window = Window(
                 1
             ],  # TODO: доделать копирование сообщений чата по его id
             items='list_chats',
-            on_click=save_chat_from_copy,
+            on_click=handlers.save_chat_from_copy,
         ),
         id='chats_paginator_for_copy_message_from',
         hide_on_single_page=True,
@@ -203,7 +190,7 @@ copy_message_from_chat_window = Window(
         state=ChatsSG.start,
     ),
     state=ChatsSG.copy_messages_from_chat,
-    getter=get_chats,
+    getter=getters.get_chats,
 )
 
 copy_message_in_chat_window = Window(
@@ -217,7 +204,7 @@ copy_message_in_chat_window = Window(
                 1
             ],  # TODO: доделать копирование сообщений чата по его id
             items='list_chats',
-            on_click=copy_messages,
+            on_click=handlers.copy_messages,
         ),
         id='chats_paginator_for_copy_message_in',
         hide_on_single_page=True,
@@ -230,7 +217,7 @@ copy_message_in_chat_window = Window(
         state=ChatsSG.copy_messages_from_chat,
     ),
     state=ChatsSG.copy_messages_in_chat,
-    getter=get_chats,
+    getter=getters.get_chats,
 )
 
 
@@ -244,7 +231,7 @@ copy_message_done_window = Window(
         state=ChatsSG.start,
     ),
     state=ChatsSG.copy_messages_done,
-    getter=get_copy_chats_name,
+    getter=getters.get_copy_chats_name,
 )
 
 
@@ -258,7 +245,7 @@ list_chats_window = Window(
                 1
             ],  # TODO: доделать поиск чата по его id для подгрузки данных в него
             items='list_chats',
-            on_click=start_chat_messages_dialog,
+            on_click=handlers.start_chat_messages_dialog,
         ),
         id='chats_paginator',
         hide_on_single_page=True,
@@ -271,7 +258,7 @@ list_chats_window = Window(
         state=ChatsSG.start,
     ),
     state=ChatsSG.list_chats,
-    getter=get_chats,
+    getter=getters.get_chats,
 )
 
 

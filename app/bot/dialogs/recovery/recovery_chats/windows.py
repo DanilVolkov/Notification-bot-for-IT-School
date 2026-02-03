@@ -10,13 +10,14 @@ from aiogram_dialog.widgets.kbd import (
 from aiogram_dialog.widgets.media import StaticMedia
 from aiogram_dialog.widgets.text import Const, Format
 
-from app.bot.consts import buttons_texts
+from app.bot.consts import buttons_texts, labels_texts
 from app.bot.consts.paths import PATH_TO_LOGO
 from app.bot.dialogs.recovery.recovery_chats import getters, handlers
 from app.bot.dialogs.states import RecoverySG
 
 list_recovery_chats_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
+    Const(labels_texts.RECOVERY_CHATS),
     ScrollingGroup(  # TODO: подумать над тем, как сделать лучше визуал
         Select(
             Format('{item[0]}'),

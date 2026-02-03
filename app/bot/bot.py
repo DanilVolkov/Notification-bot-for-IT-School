@@ -9,6 +9,7 @@ from app.bot.dialogs.account_dialog.dialogs import account_dialog
 from app.bot.dialogs.add_user.dialogs import add_user_dialog
 from app.bot.dialogs.chat_messages.dialogs import chats_messages_dialog
 from app.bot.dialogs.chats.dialogs import chats_dialog
+from app.bot.dialogs.faq.dialogs import faq_dialog
 from app.bot.dialogs.main_menu.dialogs import main_menu_dialog
 from app.bot.dialogs.message_info.dialogs import message_info_dialog
 from app.bot.dialogs.recovery.dialogs import recovery_dialog
@@ -65,6 +66,7 @@ async def main(config: Config) -> None:
         chats_messages_dialog,
         message_info_dialog,
         recovery_dialog,
+        faq_dialog
     )
 
     # Подключаем миддлвари в нужном порядке

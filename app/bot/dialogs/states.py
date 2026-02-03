@@ -76,4 +76,14 @@ class RecoverySG(StatesGroup):
     recovery_messages = State()
     list_del_messages_in_chat = State()
     confirm_recovery_messages = State()
+    recovery_message_done = State()
     recovery_faqs = State()
+
+
+class FaqSG(StatesGroup):
+    start = State()
+    list_questions = State()
+    answer = State()
+    change_question = State()
+    del_question = State()
+    change_answer = State()

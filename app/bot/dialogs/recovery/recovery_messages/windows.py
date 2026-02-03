@@ -18,7 +18,8 @@ from app.bot.dialogs.states import RecoverySG
 
 list_chats_recovery_messages_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
-    ScrollingGroup(  # TODO: подумать над тем, как сделать лучше визуал
+    Const(labels_texts.CHATS_WITH_DEL_MESSAGES),
+    ScrollingGroup(
         Select(
             Format('{item[0]}'),
             id='chats',
@@ -40,14 +41,19 @@ list_chats_recovery_messages_window = Window(
     getter=getters.get_chats_del_messages,
 )
 
-# TODO: доделать список сообщений для восстановления
+
 list_del_messages_in_chat_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
+    Format('💬 {chat_recovery_msgs_name}\n'),
+    Const(
+        labels_texts.RECOVERY_MESSAGES,
+        when=~F['is_chat_recovery_msgs_del']
+    ),
     Const(
         labels_texts.RECOVERY_MESSAGES_FOR_DEL_CHAT,
         when='is_chat_recovery_msgs_del',
     ),
-    ScrollingGroup(  # TODO: подумать над тем, как сделать лучше визуал
+    ScrollingGroup(
         Select(
             Format('{item[0]}'),
             id='messages',
@@ -62,16 +68,16 @@ list_del_messages_in_chat_window = Window(
     ),
     SwitchTo(
         Const(buttons_texts.CANCEL),
-        id='btn_list_recovery_msg_cancel',
+        id='btn_list_recovery_msgs_cancel',
         state=RecoverySG.recovery_messages,
     ),
     state=RecoverySG.list_del_messages_in_chat,
     getter=getters.get_chat_messages_for_recovery,
 )
 
-# TODO: доделать окно информации сообщения и его подтверждения
+
 confirm_recovery_message_window = Window(
-    Format('{message_info}\n'),
+    Format('{recovery_message_info}\n'),
     Const(
         labels_texts.RECOVERY_MESSAGE_CONFIRM,
         when=~F['is_chat_recovery_msgs_del'],
@@ -96,5 +102,18 @@ confirm_recovery_message_window = Window(
         state=RecoverySG.list_del_messages_in_chat,
     ),
     state=RecoverySG.confirm_recovery_messages,
+    getter=getters.get_recovery_message_info,
+)
+
+
+recovery_messages_done_window = Window(
+    Format('{recovery_message_info}\n'),
+    Const(labels_texts.RECOVERY_MESSAGE_DONE),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_recovery_msg_cancel',
+        state=RecoverySG.list_del_messages_in_chat,
+    ),
+    state=RecoverySG.recovery_message_done,
     getter=getters.get_recovery_message_info,
 )

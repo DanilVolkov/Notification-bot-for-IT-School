@@ -23,7 +23,11 @@ async def get_chat_messages_for_recovery(
     is_chat_recovery_msgs_del = dialog_manager.dialog_data.get(
         'is_chat_recovery_msgs_del'
     )
+    chat_recovery_msgs_name = dialog_manager.dialog_data.get(
+        'chat_recovery_msgs_name'
+    )
     # TODO: получение списка сообщений из таблицы удаленных сообщений по фильтру чата
+    # TODO: добавить парсинг сообщений (по аналогии с окном показа сообщений)
     del_messages = [
         ('🕒 <дата> <время> <название>', 1),
         ('✅ 12.01.2026 17:30 Название сообщения', 2),
@@ -32,6 +36,7 @@ async def get_chat_messages_for_recovery(
     return {
         'is_chat_recovery_msgs_del': is_chat_recovery_msgs_del,
         'del_messages': del_messages,
+        'chat_recovery_msgs_name': chat_recovery_msgs_name
     }
 
 
@@ -43,7 +48,7 @@ async def get_recovery_message_info(dialog_manager: DialogManager, **kwargs):
     recovery_message_id = dialog_manager.dialog_data.get('recovery_message_id')
 
     # TODO: вынести из message_info/getters -> get_message_info функции в other_handlers
-    recovery_message_info = ''
+    recovery_message_info = 'Пример сообщения'
 
     return {
         'is_chat_recovery_msgs_del': is_chat_recovery_msgs_del,

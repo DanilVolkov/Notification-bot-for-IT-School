@@ -20,7 +20,8 @@ async def set_chat_messages_for_recovery(
         chat_recovery_msgs_name
     )
     # True, если чат удален, иначе False
-    dialog_manager.dialog_data['is_chat_recovery_msgs_del'] = False
+    # TODO: поменять на запрос в БД, и в зависимости от этого устанавливать значение
+    dialog_manager.dialog_data['is_chat_recovery_msgs_del'] = True
     await dialog_manager.switch_to(state=RecoverySG.list_del_messages_in_chat)
 
 
@@ -38,4 +39,5 @@ async def set_del_message_info(
 async def recovery_message(
     callback: CallbackQuery, button: Button, dialog_manager: DialogManager
 ):
-    pass
+    # TODO: запрос в базу данных для восстановления сообщения
+    await dialog_manager.switch_to(state=RecoverySG.recovery_message_done)

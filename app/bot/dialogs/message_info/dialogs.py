@@ -48,9 +48,8 @@ main_window = Window(
 
 change_message_name_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
-    Format(
-        'Текущее название сообщения:\n<code>{message_name}</code>\n\nВведите новое название сообщения'
-    ),
+    Format('Текущее название сообщения:\n<code>{message_name}</code>\n'),
+    Const(labels_texts.NAME_MESSAGE),
     TextInput(
         id='new_message_name_input',
         type_factory=str,
@@ -68,10 +67,8 @@ change_message_name_window = Window(
 
 change_message_text_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
-    Format(
-        'Текущий текст сообщения:\n<code>{message_text}</code>\n\n'
-        + f'{labels_texts.TEXT_MESSAGE}'
-    ),
+    Format('Текущий текст сообщения:\n<code>{message_text}</code>\n'),
+    Const(labels_texts.TEXT_MESSAGE),
     TextInput(
         id='new_message_text_input',
         type_factory=str,
@@ -90,12 +87,14 @@ change_message_text_window = Window(
 change_message_datetime_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
     Format(
-        text='Текущие дата и время отправки:\n<code>{message_datetime}</code>\n\n'
-        + f'{labels_texts.TIME_SEND_MESSAGE}',
+        text='Текущие дата и время отправки:\n'
+             '<code>{message_datetime}</code>\n\n'
+            + f'{labels_texts.TIME_SEND_MESSAGE}',
         when='is_datetime',
     ),
     Format(
-        text=f'Текущая дата и время не установлены.\n\n{labels_texts.TIME_SEND_MESSAGE}',
+        text=f'Текущая дата и время не установлены.\n\n'
+             f'{labels_texts.TIME_SEND_MESSAGE}',
         when='not_is_datetime',
     ),
     TextInput(
@@ -145,10 +144,9 @@ confirm_del_message_window = Window(
 del_message_done_window = Window(
     Format('✅ Сообщение "{message_name}" успешно удалено!'),
     # TODO: изменить на название
-    SwitchTo(
+    Cancel(
         Const(buttons_texts.CANCEL),
         id='btn_copy_message_done_chat_cancel',
-        state=MessageInfoSG.start,
     ),
     state=MessageInfoSG.del_message_done,
     getter=get_message_name,

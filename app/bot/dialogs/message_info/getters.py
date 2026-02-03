@@ -71,7 +71,10 @@ async def get_message_info(dialog_manager: DialogManager, **kwargs):
         message_info = (
             f'{message_name}\n\n'
             f'{message_text}\n\n'
-            f'{message_status_sticker} {message_status_text} {message_date} в {message_time}'
+            f'{message_status_sticker} '
+            f'{message_status_text} '
+            f'{message_date} '
+            f'в {message_time}'
         )
     else:
         message_info = f'{message_name}\n\n{message_text}'

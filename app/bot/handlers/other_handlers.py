@@ -19,6 +19,10 @@ async def no_text(
     await message.answer(labels_texts.NO_TEXT)
 
 
+def set_red_question(text):
+    return f'{text}❓'
+
+
 def datetime_check(text: Any) -> str:
     try:
         planned_datetime = datetime.strptime(text, '%d.%m.%Y %H:%M')

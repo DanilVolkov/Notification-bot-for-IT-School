@@ -9,7 +9,7 @@ from app.bot.consts import buttons_texts
 from app.bot.consts.labels_texts import MAIN_MENU_TEXT
 from app.bot.consts.paths import PATH_TO_LOGO
 from app.bot.dialogs.main_menu import getters, handlers
-from app.bot.dialogs.states import ChatsSG, MenuSG, RecoverySG, UsersSG
+from app.bot.dialogs.states import ChatsSG, MenuSG, RecoverySG, UsersSG, FaqSG
 
 main_menu_dialog = Dialog(
     Window(
@@ -32,9 +32,11 @@ main_menu_dialog = Dialog(
                 id='btn_main_menu_chats',
                 state=ChatsSG.start,
             ),
-            Button(
-                text=Const(buttons_texts.MAIN_MENU_FAQ), id='btn_main_menu_faq'
-            ),  # TODO: доделать меню FAQ
+            Start(
+                text=Const(buttons_texts.MAIN_MENU_FAQ),
+                id='btn_main_menu_faq',
+                state=FaqSG.start,
+            ),
             Start(
                 text=Const(buttons_texts.MAIN_MENU_RECOVERY),
                 id='btn_main_menu_recovery',
