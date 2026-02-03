@@ -2,7 +2,7 @@ from aiogram.enums import ContentType
 from aiogram_dialog import Dialog, Window
 from aiogram_dialog.widgets.input import TextInput, MessageInput
 from aiogram_dialog.widgets.kbd import ScrollingGroup, Select, SwitchTo, \
-    Cancel, Row
+    Cancel, Row, Button
 from aiogram_dialog.widgets.media import StaticMedia
 from aiogram_dialog.widgets.text import Const, Format
 
@@ -14,7 +14,11 @@ from app.bot.handlers import other_handlers
 
 main_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
-    # TODO: добавить вопрос
+    SwitchTo(
+        text=Const(buttons_texts.FAQ_ADD_QUESTION),
+        id='btn_add_question',
+        state=FaqSG.add_question,
+    ),
     SwitchTo(
         text=Const(buttons_texts.FAQ_LIST_QUESTIONS),
         id='btn_list_questions',
@@ -26,6 +30,45 @@ main_window = Window(
     ),
     state=FaqSG.start,
 )
+
+
+add_question_window = Window(
+    StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
+    Const(labels_texts.QUESTION),
+    TextInput(
+        id='add_question_text_input',
+        type_factory=str,
+        on_success=handlers.add_question,
+    ),
+    MessageInput(func=other_handlers.no_text),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_add_question_cancel',
+        state=FaqSG.start,
+    ),
+    state=FaqSG.add_question,
+    getter=getters.get_question_info,
+)
+
+
+add_answer_window = Window(
+    StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
+    Const(labels_texts.ANSWER),
+    TextInput(
+        id='add_answer_text_input',
+        type_factory=str,
+        on_success=handlers.add_answer,
+    ),
+    MessageInput(func=other_handlers.no_text),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_add_answer_cancel',
+        state=FaqSG.add_question,
+    ),
+    state=FaqSG.add_answer,
+    getter=getters.get_question_info,
+)
+
 
 list_questions_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
@@ -66,7 +109,7 @@ answer_window = Window(
         SwitchTo(
             text=Const(buttons_texts.FAQ_DEL_QUESTION),
             id='btn_del_question',
-            state=FaqSG.del_question
+            state=FaqSG.del_question_confirm
         )
     ),
     SwitchTo(
@@ -124,15 +167,47 @@ change_answer_window = Window(
 )
 
 
-# TODO: добавить удаление вопроса
+confirm_del_question_window = Window(
+    Format('⚠️ Вы точно хотите удалить вопрос "{question}"?'),
+    Row(
+        Button(
+            text=Const(buttons_texts.YES),
+            id='btn_del_question_yes',
+            on_click=handlers.del_question,
+        ),
+        SwitchTo(
+            text=Const(buttons_texts.NO),
+            id='btn_del_question_no',
+            state=FaqSG.answer,
+        ),
+    ),
+    state=FaqSG.del_question_confirm,
+    getter=getters.get_question_info,
+)
+
+
+del_question_done_window = Window(
+    Format('✅ Вопрос "{question}" успешно удален!'),
+    SwitchTo(
+        Const(buttons_texts.CANCEL),
+        id='btn_del_question_done_cancel',
+        state=FaqSG.list_questions
+    ),
+    state=FaqSG.del_question_done,
+    getter=getters.get_question_info,
+)
 
 
 faq_dialog = Dialog(
     main_window,
+    add_question_window,
+    add_answer_window,
     list_questions_window,
     answer_window,
     change_question_window,
-    change_answer_window
+    change_answer_window,
+    confirm_del_question_window,
+    del_question_done_window
 
 
 )
