@@ -15,8 +15,7 @@ from aiogram_dialog.widgets.text import Const, Format
 
 from app.bot.consts import buttons_texts, labels_texts
 from app.bot.consts.paths import PATH_TO_LOGO
-from app.bot.dialogs.chats import getters
-from app.bot.dialogs.chats import handlers
+from app.bot.dialogs.chats import getters, handlers
 from app.bot.dialogs.states import ChatsSG
 from app.bot.handlers.other_handlers import no_text
 
@@ -127,7 +126,9 @@ del_chat_done_window = Window(
 find_chat_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
     Const(labels_texts.FIND_CHAT),
-    TextInput(id='chat_input', type_factory=str, on_success=handlers.find_chat),
+    TextInput(
+        id='chat_input', type_factory=str, on_success=handlers.find_chat
+    ),
     MessageInput(func=no_text),
     SwitchTo(
         Const(buttons_texts.CANCEL),

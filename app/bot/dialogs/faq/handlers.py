@@ -1,7 +1,7 @@
 from aiogram.types import CallbackQuery, Message
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.input import ManagedTextInput
-from aiogram_dialog.widgets.kbd import Select, Button
+from aiogram_dialog.widgets.kbd import Button, Select
 
 from app.bot.dialogs.states import FaqSG
 
@@ -40,8 +40,12 @@ async def add_answer(
     text: str,
 ):
     # TODO: запись в БД вопроса и ответа
-    dialog_manager.dialog_data['question_id'] = 123456789 # TODO: изменить на id из БД
-    dialog_manager.dialog_data['question'] = dialog_manager.dialog_data.get('new_question')
+    dialog_manager.dialog_data['question_id'] = (
+        123456789  # TODO: изменить на id из БД
+    )
+    dialog_manager.dialog_data['question'] = dialog_manager.dialog_data.get(
+        'new_question'
+    )
     dialog_manager.dialog_data['answer'] = text.strip()
     await dialog_manager.switch_to(FaqSG.answer)
 
@@ -73,9 +77,7 @@ async def update_answer(
 
 
 async def del_question(
-    callback: CallbackQuery,
-    button: Button,
-    dialog_manager: DialogManager
+    callback: CallbackQuery, button: Button, dialog_manager: DialogManager
 ):
     question_id = dialog_manager.dialog_data.get('question_id')
     # TODO: удаление вопроса из БД

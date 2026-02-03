@@ -88,13 +88,13 @@ change_message_datetime_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
     Format(
         text='Текущие дата и время отправки:\n'
-             '<code>{message_datetime}</code>\n\n'
-            + f'{labels_texts.TIME_SEND_MESSAGE}',
+        '<code>{message_datetime}</code>\n\n'
+        + f'{labels_texts.TIME_SEND_MESSAGE}',
         when='is_datetime',
     ),
     Format(
         text=f'Текущая дата и время не установлены.\n\n'
-             f'{labels_texts.TIME_SEND_MESSAGE}',
+        f'{labels_texts.TIME_SEND_MESSAGE}',
         when='not_is_datetime',
     ),
     TextInput(

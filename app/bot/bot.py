@@ -66,7 +66,7 @@ async def main(config: Config) -> None:
         chats_messages_dialog,
         message_info_dialog,
         recovery_dialog,
-        faq_dialog
+        faq_dialog,
     )
 
     # Подключаем миддлвари в нужном порядке

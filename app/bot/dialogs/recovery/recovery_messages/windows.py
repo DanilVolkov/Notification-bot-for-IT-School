@@ -46,8 +46,7 @@ list_del_messages_in_chat_window = Window(
     StaticMedia(path=PATH_TO_LOGO, type=ContentType.PHOTO),
     Format('💬 {chat_recovery_msgs_name}\n'),
     Const(
-        labels_texts.RECOVERY_MESSAGES,
-        when=~F['is_chat_recovery_msgs_del']
+        labels_texts.RECOVERY_MESSAGES, when=~F['is_chat_recovery_msgs_del']
     ),
     Const(
         labels_texts.RECOVERY_MESSAGES_FOR_DEL_CHAT,

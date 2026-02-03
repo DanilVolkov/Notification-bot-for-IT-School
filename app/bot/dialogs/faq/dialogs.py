@@ -1,14 +1,20 @@
 from aiogram.enums import ContentType
 from aiogram_dialog import Dialog, Window
-from aiogram_dialog.widgets.input import TextInput, MessageInput
-from aiogram_dialog.widgets.kbd import ScrollingGroup, Select, SwitchTo, \
-    Cancel, Row, Button
+from aiogram_dialog.widgets.input import MessageInput, TextInput
+from aiogram_dialog.widgets.kbd import (
+    Button,
+    Cancel,
+    Row,
+    ScrollingGroup,
+    Select,
+    SwitchTo,
+)
 from aiogram_dialog.widgets.media import StaticMedia
 from aiogram_dialog.widgets.text import Const, Format
 
-from app.bot.consts import labels_texts, buttons_texts
+from app.bot.consts import buttons_texts, labels_texts
 from app.bot.consts.paths import PATH_TO_LOGO
-from app.bot.dialogs.faq import handlers, getters
+from app.bot.dialogs.faq import getters, handlers
 from app.bot.dialogs.states import FaqSG
 from app.bot.handlers import other_handlers
 
@@ -104,18 +110,18 @@ answer_window = Window(
         SwitchTo(
             text=Const(buttons_texts.FAQ_CHANGE_QUESTION),
             id='btn_change_question',
-            state=FaqSG.change_question
+            state=FaqSG.change_question,
         ),
         SwitchTo(
             text=Const(buttons_texts.FAQ_DEL_QUESTION),
             id='btn_del_question',
-            state=FaqSG.del_question_confirm
-        )
+            state=FaqSG.del_question_confirm,
+        ),
     ),
     SwitchTo(
         text=Const(buttons_texts.FAQ_CHANGE_ANSWER),
         id='btn_change_answer',
-        state=FaqSG.change_answer
+        state=FaqSG.change_answer,
     ),
     SwitchTo(
         text=Const(buttons_texts.CANCEL),
@@ -191,7 +197,7 @@ del_question_done_window = Window(
     SwitchTo(
         Const(buttons_texts.CANCEL),
         id='btn_del_question_done_cancel',
-        state=FaqSG.list_questions
+        state=FaqSG.list_questions,
     ),
     state=FaqSG.del_question_done,
     getter=getters.get_question_info,
@@ -207,7 +213,5 @@ faq_dialog = Dialog(
     change_question_window,
     change_answer_window,
     confirm_del_question_window,
-    del_question_done_window
-
-
+    del_question_done_window,
 )

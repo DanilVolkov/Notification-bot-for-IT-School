@@ -13,11 +13,17 @@ from app.bot.dialogs.recovery.recovery_chats.windows import (
     recovery_chat_done_window,
     recovery_messages_for_chat_window,
 )
-from app.bot.dialogs.recovery.recovery_faq.windows import recovery_faq_window, \
-    confirm_recovery_faq_window, recovery_faq_done_window
-from app.bot.dialogs.recovery.recovery_messages.windows import \
-    list_chats_recovery_messages_window, list_del_messages_in_chat_window, \
-    confirm_recovery_message_window, recovery_messages_done_window
+from app.bot.dialogs.recovery.recovery_faq.windows import (
+    confirm_recovery_faq_window,
+    recovery_faq_done_window,
+    recovery_faq_window,
+)
+from app.bot.dialogs.recovery.recovery_messages.windows import (
+    confirm_recovery_message_window,
+    list_chats_recovery_messages_window,
+    list_del_messages_in_chat_window,
+    recovery_messages_done_window,
+)
 from app.bot.dialogs.recovery.recovery_users.windows import (
     confirm_recovery_user_window,
     recovery_user_done_window,

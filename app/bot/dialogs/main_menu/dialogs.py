@@ -9,7 +9,7 @@ from app.bot.consts import buttons_texts
 from app.bot.consts.labels_texts import MAIN_MENU_TEXT
 from app.bot.consts.paths import PATH_TO_LOGO
 from app.bot.dialogs.main_menu import getters, handlers
-from app.bot.dialogs.states import ChatsSG, MenuSG, RecoverySG, UsersSG, FaqSG
+from app.bot.dialogs.states import ChatsSG, FaqSG, MenuSG, RecoverySG, UsersSG
 
 main_menu_dialog = Dialog(
     Window(

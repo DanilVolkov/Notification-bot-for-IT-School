@@ -36,7 +36,7 @@ async def get_chat_messages_for_recovery(
     return {
         'is_chat_recovery_msgs_del': is_chat_recovery_msgs_del,
         'del_messages': del_messages,
-        'chat_recovery_msgs_name': chat_recovery_msgs_name
+        'chat_recovery_msgs_name': chat_recovery_msgs_name,
     }
 
 
